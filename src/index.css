@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #050208;
+  color: #e7e7f0;
+  font-family: "Space Mono", ui-monospace, monospace;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* 霓虹滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #050208;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#ff006e, #b026ff);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(#00f0ff, #c6ff00);
+}
+
+::selection {
+  background: #ff006e;
+  color: #050208;
+}
+
+@layer components {
+  /* 霓虹文字辉光 */
+  .text-glow-pink {
+    color: #ff006e;
+    text-shadow: 0 0 8px rgba(255, 0, 110, 0.8), 0 0 24px rgba(255, 0, 110, 0.4);
+  }
+  .text-glow-cyan {
+    color: #00f0ff;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.8), 0 0 24px rgba(0, 240, 255, 0.4);
+  }
+  .text-glow-lime {
+    color: #c6ff00;
+    text-shadow: 0 0 8px rgba(198, 255, 0, 0.8), 0 0 24px rgba(198, 255, 0, 0.4);
+  }
+  .text-glow-magenta {
+    color: #b026ff;
+    text-shadow: 0 0 8px rgba(176, 38, 255, 0.8), 0 0 24px rgba(176, 38, 255, 0.4);
+  }
+
+  /* 故障文字：基于伪元素的双通道 RGB 偏移 */
+  .glitch {
+    position: relative;
+    display: inline-block;
+  }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .glitch::before {
+    color: #ff006e;
+    transform: translate(-2px, 0);
+    animation: glitch-pan 2.5s infinite steps(2, end);
+    mix-blend-mode: screen;
+  }
+  .glitch::after {
+    color: #00f0ff;
+    transform: translate(2px, 0);
+    animation: glitch-pan 3.2s infinite steps(2, end) reverse;
+    mix-blend-mode: screen;
+  }
+
+  /* CRT 扫描线叠层 */
+  .scanlines::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0px,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0.25) 3px,
+      rgba(0, 0, 0, 0.25) 4px
+    );
+    z-index: 30;
+  }
+
+  /* 透视网格地面 */
+  .grid-floor {
+    background-image:
+      linear-gradient(to right, rgba(0, 240, 255, 0.18) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 0, 110, 0.18) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* 霓虹分隔线 */
+  .neon-rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 0, 110, 0.6),
+      rgba(0, 240, 255, 0.6),
+      transparent
+    );
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+  }
+
+  /* 霓虹按钮扫光 */
+  .neon-sweep {
+    position: relative;
+    overflow: hidden;
+  }
+  .neon-sweep::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.35),
+      transparent
+    );
+    transform: translateX(-120%);
+  }
+  .neon-sweep:hover::before {
+    animation: sweep 0.9s ease-in-out;
+  }
+
+  /* 角标装饰 */
+  .corner-ticks {
+    position: relative;
+  }
+  .corner-ticks::before,
+  .corner-ticks::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-color: currentColor;
+  }
+  .corner-ticks::before {
+    top: -1px;
+    left: -1px;
+    border-top: 1px solid;
+    border-left: 1px solid;
+  }
+  .corner-ticks::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+  }
+}
+
+@layer utilities {
+  .text-stroke-neon {
+    -webkit-text-stroke: 1px rgba(0, 240, 255, 0.6);
+    color: transparent;
+  }
+  .bg-noise {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 3px 3px;
+  }
+}
+
+/* 尊重 reduced-motion 偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .glitch::before,
+  .glitch::after {
+    display: none;
+  }
+}
