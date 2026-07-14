@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOLT STREETWEAR - Product Detail</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body id="productDetailPage">
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">VOL<span class="logo-accent">T</span></a>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-dropdown">
+          <a href="products.html" class="nav-link nav-dropdown-toggle">
+            Shop <span class="dropdown-arrow">&#9660;</span>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="products.html" class="nav-dropdown-item">All Products</a>
+            <a href="products.html?category=hoodies" class="nav-dropdown-item">Hoodies</a>
+            <a href="products.html?category=outerwear" class="nav-dropdown-item">Outerwear</a>
+            <a href="products.html?category=tshirts" class="nav-dropdown-item">T-Shirts</a>
+            <a href="products.html?category=pants" class="nav-dropdown-item">Pants</a>
+            <a href="products.html?category=accessories" class="nav-dropdown-item">Accessories</a>
+          </div>
+        </li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="cart.html" class="nav-action-btn cart-toggle" aria-label="Cart">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 10a4 4 0 01-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="cart-badge">0</span>
+        </a>
+      </div>
+      <div class="mobile-menu-toggle">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="products.html" class="nav-link">Shop</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="cart.html" class="nav-link">Cart</a>
+</div>
+
+<!-- Main Content -->
+<main class="main-content">
+
+  <section class="product-detail" id="productDetailContent">
+    <!-- Dynamically rendered -->
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">VOL<span class="logo-accent">T</span></a>
+      <p>Streetwear for the bold. Premium quality, rebellious spirit.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="products.html">All Products</a></li>
+        <li><a href="products.html?category=hoodies">Hoodies</a></li>
+        <li><a href="products.html?category=outerwear">Outerwear</a></li>
+        <li><a href="products.html?category=accessories">Accessories</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Returns</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 VOLT STREETWEAR. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram">IG</a>
+      <a href="#" aria-label="Twitter">TW</a>
+      <a href="#" aria-label="TikTok">TK</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Drawer -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-header">
+    <div class="cart-drawer-title">
+      Cart <span class="cart-drawer-count"></span>
+    </div>
+    <button class="cart-drawer-close" id="cartDrawerClose">&times;</button>
+  </div>
+  <div class="cart-drawer-body"></div>
+  <div class="cart-drawer-footer">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-amount">$0.00</span>
+    </div>
+    <a href="cart.html" class="btn btn-primary cart-checkout-btn"><span>View Cart</span></a>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast"></div>
+
+<!-- Scripts -->
+<script src="js/app.js"></script>
+<script src="js/carousel.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/gallery.js"></script>
+<script src="js/animations.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('productDetailContent');
+    const params = new URLSearchParams(window.location.search);
+    const productId = parseInt(params.get('id')) || 1;
+    const product = App.getProductById(productId);
+
+    if (!product) {
+      container.innerHTML = '<div style="text-align:center;padding:120px;"><h2>Product not found</h2><a href="products.html" class="btn btn-primary" style="margin-top:24px;"><span>Back to Shop</span></a></div>';
+      return;
+    }
+
+    // Update page title
+    document.title = `VOLT STREETWEAR - ${product.name}`;
+
+    // Build gallery images
+    let galleryMainHTML = '';
+    product.gallery.forEach((img, i) => {
+      galleryMainHTML += `<img src="${img}" alt="${product.name} view ${i+1}" class="${i === 0 ? 'active' : ''}">`;
+    });
+
+    let galleryThumbsHTML = '';
+    product.gallery.forEach((img, i) => {
+      galleryThumbsHTML += `<div class="product-gallery-thumb ${i === 0 ? 'active' : ''}"><img src="${img}" alt="${product.name} thumb ${i+1}"></div>`;
+    });
+
+    // Build sizes
+    let sizesHTML = '';
+    product.sizes.forEach((size, i) => {
+      sizesHTML += `<button class="size-btn ${i === 0 ? 'selected' : ''}" data-size="${size}">${size}</button>`;
+    });
+
+    // Build colors
+    let colorsHTML = '';
+    const colorMap = {
+      'Black': '#1a1a1a',
+      'White': '#ffffff',
+      'Gray': '#888888',
+      'Camo': '#4a5d3e',
+      'Olive': '#4a5d3e',
+      'Blue': '#2a4a8a',
+      'Brown': '#6b4c3b',
+      'Charcoal': '#3a3a3a',
+      'Natural': '#d4c5a9',
+      'Red/Black': '#cc0000',
+      'Black/White': '#1a1a1a'
+    };
+    product.colors.forEach((color, i) => {
+      const hex = colorMap[color] || '#333';
+      colorsHTML += `<button class="color-btn ${i === 0 ? 'selected' : ''}" data-color="${color}" style="background-color: ${hex}" title="${color}"></button>`;
+    });
+
+    // Build meta
+    let metaHTML = '';
+    metaHTML += `<div class="product-meta-item"><span>SKU:</span> VOLT-${product.id.toString().padStart(3, '0')}</div>`;
+    metaHTML += `<div class="product-meta-item"><span>Category:</span> ${product.category}</div>`;
+    if (product.badge === 'new') {
+      metaHTML += `<div class="product-meta-item"><span>Tag:</span> New Arrival</div>`;
+    }
+
+    container.innerHTML = `
+      <div class="product-gallery">
+        <div class="product-gallery-main">
+          ${galleryMainHTML}
+        </div>
+        <div class="product-gallery-thumbs">
+          ${galleryThumbsHTML}
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-info-category">${product.category}</div>
+        <h1 class="product-info-name">${product.name}</h1>
+        <div class="product-info-price">$${product.price}</div>
+        <p class="product-info-desc">${product.description}</p>
+
+        <div class="product-size-label">Size</div>
+        <div class="product-sizes">
+          ${sizesHTML}
+        </div>
+
+        <div class="product-size-label">Color</div>
+        <div class="product-colors">
+          ${colorsHTML}
+        </div>
+
+        <div class="product-size-label">Quantity</div>
+        <div class="product-quantity">
+          <button class="qty-btn" id="qtyMinus">−</button>
+          <input type="number" class="qty-input" id="quantityInput" value="1" min="1" max="10" readonly>
+          <button class="qty-btn" id="qtyPlus">+</button>
+        </div>
+
+        <button class="btn btn-primary btn-lg product-add-to-cart" onclick="animations.handleDetailAddToCart(${product.id})">
+          <span>Add to Cart</span>
+        </button>
+
+        <div class="product-meta">
+          ${metaHTML}
+        </div>
+      </div>
+    `;
+  });
+</script>
+
+</body>
+</html>

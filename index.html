@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOLT STREETWEAR - Home</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">VOL<span class="logo-accent">T</span></a>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li class="nav-dropdown">
+          <a href="products.html" class="nav-link nav-dropdown-toggle">
+            Shop <span class="dropdown-arrow">&#9660;</span>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="products.html" class="nav-dropdown-item">All Products</a>
+            <a href="products.html?category=hoodies" class="nav-dropdown-item">Hoodies</a>
+            <a href="products.html?category=outerwear" class="nav-dropdown-item">Outerwear</a>
+            <a href="products.html?category=tshirts" class="nav-dropdown-item">T-Shirts</a>
+            <a href="products.html?category=pants" class="nav-dropdown-item">Pants</a>
+            <a href="products.html?category=accessories" class="nav-dropdown-item">Accessories</a>
+          </div>
+        </li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="cart.html" class="nav-action-btn cart-toggle" aria-label="Cart">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 10a4 4 0 01-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="cart-badge">0</span>
+        </a>
+      </div>
+      <div class="mobile-menu-toggle">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav">
+  <a href="index.html" class="nav-link active">Home</a>
+  <a href="products.html" class="nav-link">Shop</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="cart.html" class="nav-link">Cart</a>
+</div>
+
+<!-- Main Content -->
+<main class="main-content">
+
+  <!-- Hero Carousel -->
+  <section class="hero-carousel">
+    <div class="carousel-track">
+      <!-- Slide 1 -->
+      <div class="carousel-slide active">
+        <div class="slide-bg" style="background-image: url('https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Black+streetwear+model+wearing+oversized+hoodie+in+urban+night+city+street+with+neon+signs,+dramatic+lighting,+cinematic+photography,+high+contrast+black+and+white+with+red+accents&image_size=landscape_16_9')"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <span class="slide-tag">New Collection</span>
+          <h2 class="slide-title">DROPPING <span class="accent">FW26</span></h2>
+          <p class="slide-desc">The latest collection redefines street culture with bold graphics and premium materials.</p>
+          <div class="slide-cta">
+            <a href="products.html" class="btn btn-primary btn-lg"><span>Shop Now</span></a>
+          </div>
+        </div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="carousel-slide">
+        <div class="slide-bg" style="background-image: url('https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Streetwear+fashion+group+shot+in+city+alley,+graffiti+walls,+wearing+black+and+red+clothing,+urban+style+photography,+dramatic+shadows&image_size=landscape_16_9')"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <span class="slide-tag">Limited Edition</span>
+          <h2 class="slide-title">GRAFFITI <span class="accent">SERIES</span></h2>
+          <p class="slide-desc">Collaboration with top street artists. Each piece is a wearable canvas.</p>
+          <div class="slide-cta">
+            <a href="products.html" class="btn btn-primary btn-lg"><span>Explore</span></a>
+          </div>
+        </div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="carousel-slide">
+        <div class="slide-bg" style="background-image: url('https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Black+leather+bomber+jacket+on+model+against+industrial+concrete+wall,+street+fashion+photography,+dark+moody+lighting,+high+fashion+editorial+style&image_size=landscape_16_9')"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <span class="slide-tag">Essentials</span>
+          <h2 class="slide-title">BOMBER <span class="accent">SEASON</span></h2>
+          <p class="slide-desc">Technical bombers built for the city. Water-resistant, windproof, unstoppable.</p>
+          <div class="slide-cta">
+            <a href="products.html?category=outerwear" class="btn btn-primary btn-lg"><span>Shop Outerwear</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="carousel-controls">
+      <button class="carousel-btn carousel-btn-prev">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="carousel-btn carousel-btn-next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="carousel-dots"></div>
+
+    <div class="carousel-progress">
+      <div class="carousel-progress-bar"></div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="featured-section">
+    <div class="section-header reveal">
+      <span class="section-label">Featured</span>
+      <h2 class="section-title">The <span class="accent">Essentials</span></h2>
+      <p class="section-subtitle">Our most-wanted pieces. Built for the streets, crafted with attitude.</p>
+    </div>
+
+    <div class="products-grid" id="featuredProductsGrid">
+      <!-- Dynamically rendered by JS -->
+    </div>
+  </section>
+
+  <!-- Brand Section -->
+  <section class="brand-section reveal">
+    <div class="brand-content">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">WE ARE <span class="accent">VOLT</span></h2>
+      <p>Born from the streets, raised on rebellion. VOLT is more than a brand — it's a movement. We fuse raw street energy with premium craftsmanship to create clothing that speaks without saying a word. Every stitch, every graphic, every detail is a statement.</p>
+      <a href="about.html" class="btn btn-outline"><span>Learn More</span></a>
+      <div class="brand-stats">
+        <div class="brand-stat">
+          <div class="brand-stat-number">2018</div>
+          <div class="brand-stat-label">Founded</div>
+        </div>
+        <div class="brand-stat">
+          <div class="brand-stat-number">50+</div>
+          <div class="brand-stat-label">Cities</div>
+        </div>
+        <div class="brand-stat">
+          <div class="brand-stat-number">100K+</div>
+          <div class="brand-stat-label">Community</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">VOL<span class="logo-accent">T</span></a>
+      <p>Streetwear for the bold. Premium quality, rebellious spirit.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="products.html">All Products</a></li>
+        <li><a href="products.html?category=hoodies">Hoodies</a></li>
+        <li><a href="products.html?category=outerwear">Outerwear</a></li>
+        <li><a href="products.html?category=accessories">Accessories</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Returns</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 VOLT STREETWEAR. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram">IG</a>
+      <a href="#" aria-label="Twitter">TW</a>
+      <a href="#" aria-label="TikTok">TK</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Drawer -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-header">
+    <div class="cart-drawer-title">
+      Cart <span class="cart-drawer-count"></span>
+    </div>
+    <button class="cart-drawer-close" id="cartDrawerClose">&times;</button>
+  </div>
+  <div class="cart-drawer-body">
+    <!-- Dynamically rendered -->
+  </div>
+  <div class="cart-drawer-footer">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-amount">$0.00</span>
+    </div>
+    <a href="cart.html" class="btn btn-primary cart-checkout-btn"><span>View Cart</span></a>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast"></div>
+
+<!-- Scripts -->
+<script src="js/app.js"></script>
+<script src="js/carousel.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/animations.js"></script>
+
+<script>
+  // Render featured products on homepage
+  document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.getElementById('featuredProductsGrid');
+    if (!grid) return;
+
+    const featured = App.getFeaturedProducts();
+
+    let html = '';
+    featured.forEach(product => {
+      let badgeHtml = '';
+      if (product.badge === 'new') badgeHtml = '<span class="product-card-badge new">New</span>';
+      else if (product.badge === 'sale') badgeHtml = '<span class="product-card-badge sale">Sale</span>';
+
+      html += `
+        <div class="product-card reveal" data-product-id="${product.id}">
+          <a href="product-detail.html?id=${product.id}">
+            <div class="product-card-image">
+              ${badgeHtml}
+              <img src="${product.images[0]}" alt="${product.name}" class="img-primary">
+              <img src="${product.images[1]}" alt="${product.name}" class="img-secondary">
+              <div class="product-card-quick-buy">Quick Add</div>
+            </div>
+            <div class="product-card-info">
+              <div class="product-card-category">${product.category}</div>
+              <div class="product-card-name">${product.name}</div>
+              <div class="product-card-price">$${product.price}</div>
+            </div>
+          </a>
+        </div>
+      `;
+    });
+
+    grid.innerHTML = html;
+  });
+</script>
+
+</body>
+</html>

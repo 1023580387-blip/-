@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOLT STREETWEAR - Shop</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">VOL<span class="logo-accent">T</span></a>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-dropdown">
+          <a href="products.html" class="nav-link nav-dropdown-toggle active">
+            Shop <span class="dropdown-arrow">&#9660;</span>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="products.html" class="nav-dropdown-item">All Products</a>
+            <a href="products.html?category=hoodies" class="nav-dropdown-item">Hoodies</a>
+            <a href="products.html?category=outerwear" class="nav-dropdown-item">Outerwear</a>
+            <a href="products.html?category=tshirts" class="nav-dropdown-item">T-Shirts</a>
+            <a href="products.html?category=pants" class="nav-dropdown-item">Pants</a>
+            <a href="products.html?category=accessories" class="nav-dropdown-item">Accessories</a>
+          </div>
+        </li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="cart.html" class="nav-action-btn cart-toggle" aria-label="Cart">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 10a4 4 0 01-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="cart-badge">0</span>
+        </a>
+      </div>
+      <div class="mobile-menu-toggle">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="products.html" class="nav-link active">Shop</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="cart.html" class="nav-link">Cart</a>
+</div>
+
+<!-- Main Content -->
+<main class="main-content">
+
+  <section class="products-page">
+    <div class="products-page-header reveal">
+      <span class="section-label">Shop</span>
+      <h1 class="section-title">All <span class="accent">Products</span></h1>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="products-filters reveal" id="categoryFilters">
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="hoodies">Hoodies</button>
+      <button class="filter-btn" data-category="outerwear">Outerwear</button>
+      <button class="filter-btn" data-category="tshirts">T-Shirts</button>
+      <button class="filter-btn" data-category="pants">Pants</button>
+      <button class="filter-btn" data-category="tops">Tops</button>
+      <button class="filter-btn" data-category="accessories">Accessories</button>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid" id="productsGrid">
+      <!-- Dynamically rendered -->
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">VOL<span class="logo-accent">T</span></a>
+      <p>Streetwear for the bold. Premium quality, rebellious spirit.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="products.html">All Products</a></li>
+        <li><a href="products.html?category=hoodies">Hoodies</a></li>
+        <li><a href="products.html?category=outerwear">Outerwear</a></li>
+        <li><a href="products.html?category=accessories">Accessories</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Returns</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 VOLT STREETWEAR. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram">IG</a>
+      <a href="#" aria-label="Twitter">TW</a>
+      <a href="#" aria-label="TikTok">TK</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Drawer -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-header">
+    <div class="cart-drawer-title">
+      Cart <span class="cart-drawer-count"></span>
+    </div>
+    <button class="cart-drawer-close" id="cartDrawerClose">&times;</button>
+  </div>
+  <div class="cart-drawer-body"></div>
+  <div class="cart-drawer-footer">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-amount">$0.00</span>
+    </div>
+    <a href="cart.html" class="btn btn-primary cart-checkout-btn"><span>View Cart</span></a>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast"></div>
+
+<!-- Scripts -->
+<script src="js/app.js"></script>
+<script src="js/carousel.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/animations.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.getElementById('productsGrid');
+    const filters = document.getElementById('categoryFilters');
+
+    // Get category from URL
+    const params = new URLSearchParams(window.location.search);
+    const urlCategory = params.get('category') || 'all';
+
+    // Set active filter
+    filters.querySelectorAll('.filter-btn').forEach(btn => {
+      if (btn.dataset.category === urlCategory) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // Render products
+    function renderProducts(category) {
+      const products = App.getProductsByCategory(category);
+
+      let html = '';
+      products.forEach(product => {
+        let badgeHtml = '';
+        if (product.badge === 'new') badgeHtml = '<span class="product-card-badge new">New</span>';
+        else if (product.badge === 'sale') badgeHtml = '<span class="product-card-badge sale">Sale</span>';
+
+        html += `
+          <div class="product-card reveal" data-product-id="${product.id}">
+            <a href="product-detail.html?id=${product.id}">
+              <div class="product-card-image">
+                ${badgeHtml}
+                <img src="${product.images[0]}" alt="${product.name}" class="img-primary">
+                <img src="${product.images[1]}" alt="${product.name}" class="img-secondary">
+                <div class="product-card-quick-buy">Quick Add</div>
+              </div>
+              <div class="product-card-info">
+                <div class="product-card-category">${product.category}</div>
+                <div class="product-card-name">${product.name}</div>
+                <div class="product-card-price">$${product.price}</div>
+              </div>
+            </a>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+    }
+
+    renderProducts(urlCategory);
+
+    // Filter click handlers
+    filters.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        filters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const category = btn.dataset.category;
+        renderProducts(category);
+        // Update URL
+        const url = new URL(window.location);
+        if (category === 'all') {
+          url.searchParams.delete('category');
+        } else {
+          url.searchParams.set('category', category);
+        }
+        window.history.pushState({}, '', url);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
