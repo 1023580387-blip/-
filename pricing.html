@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>定价方案 - CloudFlow 企业级智能运营平台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .nav-scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .mobile-menu.open { max-height: 320px; }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .accordion-content.open { max-height: 500px; }
+    .input-glow { transition: box-shadow 0.3s ease, border-color 0.3s ease; }
+    .input-glow:focus { box-shadow: 0 0 0 3px rgba(37,99,235,0.15); border-color: #2563eb; outline: none; }
+    .price-enter { opacity: 0; transform: translateY(8px); }
+    .price-active { opacity: 1; transform: translateY(0); transition: opacity 0.35s ease, transform 0.35s ease; }
+    .toggle-track { transition: background-color 0.3s ease; }
+    .toggle-thumb { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .saving-badge { animation: pulse-badge 2s ease-in-out infinite; }
+    @keyframes pulse-badge { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- ========== NAVIGATION ========== -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-scrolled">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      <a href="index.html" class="flex items-center gap-2.5 text-xl font-bold text-primary-600">
+        <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2563eb"/><path d="M10 22V12l6 5-6 5z" fill="white"/><path d="M16 22l6-10-6 10z" fill="rgba(255,255,255,0.6)"/></svg>
+        CloudFlow
+      </a>
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="index.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">首页</a>
+        <a href="features.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">功能</a>
+        <a href="pricing.html" class="text-sm font-medium text-primary-600">定价</a>
+        <a href="docs.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">文档</a>
+      </div>
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-4 py-2">登录</a>
+        <a href="#" class="text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 px-5 py-2.5 rounded-lg transition-colors shadow-sm">免费试用</a>
+      </div>
+      <button id="menuBtn" class="lg:hidden p-2 text-gray-600 hover:text-gray-900" aria-label="菜单">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path id="menuIconOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/><path id="menuIconClose" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6L6 18" class="hidden"/></svg>
+      </button>
+    </div>
+    <div id="mobileMenu" class="mobile-menu lg:hidden">
+      <div class="py-4 space-y-2 border-t border-gray-100">
+        <a href="index.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">首页</a>
+        <a href="features.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">功能</a>
+        <a href="pricing.html" class="block px-3 py-2 text-sm font-medium text-primary-600 bg-primary-50 rounded-lg">定价</a>
+        <a href="docs.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">文档</a>
+        <div class="flex gap-2 pt-2">
+          <a href="#" class="flex-1 text-center text-sm font-medium text-gray-600 border border-gray-200 py-2.5 rounded-lg hover:bg-gray-50">登录</a>
+          <a href="#" class="flex-1 text-center text-sm font-medium text-white bg-primary-600 py-2.5 rounded-lg hover:bg-primary-700">免费试用</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== PAGE HEADER ========== -->
+<section class="pt-28 pb-10 lg:pt-36 lg:pb-14 bg-gradient-to-b from-primary-50/50 to-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900">选择适合您的方案</h1>
+    <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">所有方案均包含 14 天免费试用，无需信用卡，随时可取消。</p>
+  </div>
+</section>
+
+<!-- ========== PRICING TOGGLE + CARDS ========== -->
+<section class="pb-16 lg:pb-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Toggle -->
+    <div class="flex items-center justify-center gap-4 mb-12">
+      <span id="monthlyLabel" class="text-sm font-semibold text-gray-900 cursor-pointer select-none">月付</span>
+      <button id="pricingToggle" class="relative w-14 h-7 rounded-full toggle-track bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2" role="switch" aria-checked="false">
+        <span class="toggle-thumb absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-sm block"></span>
+      </button>
+      <div class="flex items-center gap-2">
+        <span id="yearlyLabel" class="text-sm font-semibold text-gray-500 cursor-pointer select-none">年付</span>
+        <span class="saving-badge inline-block bg-green-50 text-green-600 text-xs font-bold px-2 py-0.5 rounded-full">省 20%</span>
+      </div>
+    </div>
+
+    <!-- Pricing Cards -->
+    <div class="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <!-- Starter -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col hover:shadow-lg transition-shadow">
+        <h3 class="text-lg font-bold text-gray-900">入门版</h3>
+        <p class="text-sm text-gray-500 mt-1">适合小型团队起步</p>
+        <div class="mt-6 mb-6 flex items-baseline gap-1">
+          <span class="price-number text-4xl font-extrabold text-gray-900" data-monthly="299" data-yearly="239">¥299</span>
+          <span class="text-gray-400 text-sm">/月</span>
+        </div>
+        <p class="text-xs text-gray-400 -mt-4 mb-6" id="starterYearly">年付 ¥2,868/年</p>
+        <a href="#" class="mb-8 block text-center py-3 border-2 border-gray-200 text-gray-700 font-semibold rounded-xl hover:border-primary-300 hover:text-primary-600 transition-all">开始试用</a>
+        <ul class="space-y-3 text-sm text-gray-600 flex-1">
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>最多 5 名团队成员</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>基础数据分析</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>5 个自动化工作流</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>邮件客服支持</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>1 GB 存储空间</li>
+        </ul>
+      </div>
+
+      <!-- Professional -->
+      <div class="bg-primary-600 text-white rounded-2xl p-8 flex flex-col relative scale-[1.03] shadow-xl shadow-primary-600/25">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-primary-600 text-xs font-bold px-4 py-1 rounded-full shadow-sm">最受欢迎</div>
+        <h3 class="text-lg font-bold">专业版</h3>
+        <p class="text-sm text-primary-200 mt-1">适合成长型企业</p>
+        <div class="mt-6 mb-6 flex items-baseline gap-1">
+          <span class="price-number text-4xl font-extrabold text-white" data-monthly="799" data-yearly="639">¥799</span>
+          <span class="text-primary-300 text-sm">/月</span>
+        </div>
+        <p class="text-xs text-primary-300 -mt-4 mb-6" id="proYearly">年付 ¥7,668/年</p>
+        <a href="#" class="mb-8 block text-center py-3 bg-white text-primary-600 font-semibold rounded-xl hover:bg-primary-50 transition-all">开始试用</a>
+        <ul class="space-y-3 text-sm text-primary-100 flex-1">
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>最多 50 名团队成员</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>高级数据分析与 AI 预测</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>无限自动化工作流</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>优先客服支持</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>API 访问</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>50 GB 存储空间</li>
+        </ul>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col hover:shadow-lg transition-shadow">
+        <h3 class="text-lg font-bold text-gray-900">企业版</h3>
+        <p class="text-sm text-gray-500 mt-1">适合大型组织</p>
+        <div class="mt-6 mb-6 flex items-baseline gap-1">
+          <span class="text-4xl font-extrabold text-gray-900">定制</span>
+        </div>
+        <p class="text-xs text-gray-400 -mt-4 mb-6">按需定价，灵活配置</p>
+        <a href="#" class="mb-8 block text-center py-3 border-2 border-gray-200 text-gray-700 font-semibold rounded-xl hover:border-primary-300 hover:text-primary-600 transition-all">联系销售</a>
+        <ul class="space-y-3 text-sm text-gray-600 flex-1">
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>无限团队成员</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>专属客户成功经理</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>私有化部署</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>SLA 保障 99.99%</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>定制化开发</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>无限存储空间</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURE COMPARISON TABLE ========== -->
+<section class="py-16 lg:py-20 bg-gray-50">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900 text-center mb-12">功能对比</h2>
+    <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-gray-200">
+            <th class="text-left px-6 py-4 font-semibold text-gray-900">功能</th>
+            <th class="text-center px-6 py-4 font-semibold text-gray-600">入门版</th>
+            <th class="text-center px-6 py-4 font-semibold text-primary-600 bg-primary-50">专业版</th>
+            <th class="text-center px-6 py-4 font-semibold text-gray-600">企业版</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-gray-100">
+            <td class="px-6 py-4 text-gray-700 font-medium">团队成员</td>
+            <td class="text-center px-6 py-4 text-gray-500">最多 5 人</td>
+            <td class="text-center px-6 py-4 text-gray-500 bg-primary-50/50">最多 50 人</td>
+            <td class="text-center px-6 py-4 text-gray-500">无限</td>
+          </tr>
+          <tr class="border-b border-gray-100">
+            <td class="px-6 py-4 text-gray-700 font-medium">数据分析</td>
+            <td class="text-center px-6 py-4 text-gray-500">基础</td>
+            <td class="text-center px-6 py-4 text-gray-500 bg-primary-50/50">高级 + AI</td>
+            <td class="text-center px-6 py-4 text-gray-500">定制</td>
+          </tr>
+          <tr class="border-b border-gray-100">
+            <td class="px-6 py-4 text-gray-700 font-medium">自动化工作流</td>
+            <td class="text-center px-6 py-4 text-gray-500">5 个</td>
+            <td class="text-center px-6 py-4 text-gray-500 bg-primary-50/50">无限</td>
+            <td class="text-center px-6 py-4 text-gray-500">无限</td>
+          </tr>
+          <tr class="border-b border-gray-100">
+            <td class="px-6 py-4 text-gray-700 font-medium">API 访问</td>
+            <td class="text-center px-6 py-4"><svg class="w-5 h-5 text-gray-300 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></td>
+            <td class="text-center px-6 py-4 bg-primary-50/50"><svg class="w-5 h-5 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></td>
+            <td class="text-center px-6 py-4"><svg class="w-5 h-5 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></td>
+          </tr>
+          <tr class="border-b border-gray-100">
+            <td class="px-6 py-4 text-gray-700 font-medium">SSO / MFA</td>
+            <td class="text-center px-6 py-4"><svg class="w-5 h-5 text-gray-300 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></td>
+            <td class="text-center px-6 py-4 bg-primary-50/50"><svg class="w-5 h-5 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></td>
+            <td class="text-center px-6 py-4"><svg class="w-5 h-5 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></td>
+          </tr>
+          <tr class="border-b border-gray-100">
+            <td class="px-6 py-4 text-gray-700 font-medium">私有化部署</td>
+            <td class="text-center px-6 py-4"><svg class="w-5 h-5 text-gray-300 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></td>
+            <td class="text-center px-6 py-4 bg-primary-50/50"><svg class="w-5 h-5 text-gray-300 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></td>
+            <td class="text-center px-6 py-4"><svg class="w-5 h-5 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 text-gray-700 font-medium">客服支持</td>
+            <td class="text-center px-6 py-4 text-gray-500">邮件</td>
+            <td class="text-center px-6 py-4 text-gray-500 bg-primary-50/50">优先</td>
+            <td class="text-center px-6 py-4 text-gray-500">专属</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="py-16 lg:py-20 bg-white">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">定价常见问题</h2>
+    </div>
+    <div class="space-y-3">
+      <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
+          <span>可以随时更换套餐吗？</span>
+          <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content px-6"><p class="pb-4 text-gray-500 text-sm leading-relaxed">可以。升级即时生效，按剩余天数比例计费；降级在当前计费周期结束后生效，所有数据保留不丢失。</p></div>
+      </div>
+      <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
+          <span>年付方案如何计费？</span>
+          <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content px-6"><p class="pb-4 text-gray-500 text-sm leading-relaxed">年付方案按年一次性支付，享受月付价格 8 折优惠。支持对公转账和在线支付，开具增值税专用发票。</p></div>
+      </div>
+      <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
+          <span>企业版如何获取报价？</span>
+          <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content px-6"><p class="pb-4 text-gray-500 text-sm leading-relaxed">点击 "联系销售" 按钮，填写您的需求信息，我们的销售团队将在 1 个工作日内与您联系，提供定制化方案和报价。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="py-20 lg:py-28 bg-primary-600">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl lg:text-4xl font-extrabold text-white">还在犹豫？免费试用 14 天</h2>
+    <p class="mt-4 text-lg text-primary-200">无需信用卡，完整体验全部功能，随时取消。</p>
+    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+      <a href="#" class="inline-flex items-center justify-center gap-2 bg-white text-primary-600 font-semibold px-8 py-3.5 rounded-xl hover:bg-primary-50 transition-colors shadow-lg">
+        免费开始使用
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="bg-gray-900 text-gray-400 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div class="lg:col-span-2">
+        <a href="index.html" class="flex items-center gap-2 text-white text-xl font-bold mb-4">
+          <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2563eb"/><path d="M10 22V12l6 5-6 5z" fill="white"/><path d="M16 22l6-10-6 10z" fill="rgba(255,255,255,0.6)"/></svg>
+          CloudFlow
+        </a>
+        <p class="text-sm leading-relaxed max-w-xs">企业级智能运营平台，帮助团队高效协作、数据驱动决策，实现业务持续增长。</p>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">产品</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="features.html" class="hover:text-white transition-colors">功能</a></li>
+          <li><a href="pricing.html" class="hover:text-white transition-colors">定价</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">集成</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">更新日志</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">资源</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="docs.html" class="hover:text-white transition-colors">文档</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">API 参考</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">博客</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">社区</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">公司</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">关于我们</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">招聘</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">隐私政策</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">服务条款</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-12 pt-8 border-t border-gray-800 text-sm text-center">
+      &copy; 2026 CloudFlow. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile menu
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const iconOpen = document.getElementById('menuIconOpen');
+const iconClose = document.getElementById('menuIconClose');
+let menuOpen = false;
+menuBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  mobileMenu.classList.toggle('open', menuOpen);
+  iconOpen.classList.toggle('hidden', menuOpen);
+  iconClose.classList.toggle('hidden', !menuOpen);
+});
+
+// Pricing toggle
+const toggle = document.getElementById('pricingToggle');
+const monthlyLabel = document.getElementById('monthlyLabel');
+const yearlyLabel = document.getElementById('yearlyLabel');
+const thumb = toggle.querySelector('.toggle-thumb');
+let isYearly = false;
+
+function animatePriceChange() {
+  const prices = document.querySelectorAll('.price-number');
+  prices.forEach(el => {
+    el.classList.remove('price-active');
+    el.classList.add('price-enter');
+    void el.offsetWidth;
+    const newPrice = isYearly ? el.dataset.yearly : el.dataset.monthly;
+    if (newPrice) {
+      el.textContent = '¥' + parseInt(newPrice).toLocaleString();
+    }
+    el.classList.remove('price-enter');
+    el.classList.add('price-active');
+  });
+
+  // Update yearly subtext
+  document.getElementById('starterYearly').textContent = isYearly ? '年付 ¥2,868/年' : '年付 ¥2,868/年';
+  const proYearly = document.getElementById('proYearly');
+  proYearly.textContent = isYearly ? '年付 ¥7,668/年' : '年付 ¥7,668/年';
+  proYearly.style.opacity = isYearly ? '0.7' : '1';
+  document.getElementById('starterYearly').style.opacity = isYearly ? '0.7' : '1';
+}
+
+toggle.addEventListener('click', () => {
+  isYearly = !isYearly;
+  toggle.setAttribute('aria-checked', isYearly);
+  thumb.style.transform = isYearly ? 'translateX(28px)' : 'translateX(0)';
+  monthlyLabel.classList.toggle('text-gray-500', isYearly);
+  monthlyLabel.classList.toggle('text-gray-900', !isYearly);
+  yearlyLabel.classList.toggle('text-gray-500', !isYearly);
+  yearlyLabel.classList.toggle('text-gray-900', isYearly);
+  animatePriceChange();
+});
+
+// Also allow clicking labels
+monthlyLabel.addEventListener('click', () => { if (isYearly) toggle.click(); });
+yearlyLabel.addEventListener('click', () => { if (!isYearly) toggle.click(); });
+
+// FAQ accordion
+document.querySelectorAll('.faq-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const content = btn.nextElementSibling;
+    const icon = btn.querySelector('.faq-icon');
+    const isOpen = content.classList.contains('open');
+    document.querySelectorAll('.accordion-content.open').forEach(c => c.classList.remove('open'));
+    document.querySelectorAll('.faq-icon').forEach(i => i.style.transform = 'rotate(0deg)');
+    document.querySelectorAll('.faq-toggle').forEach(b => b.setAttribute('aria-expanded', 'false'));
+    if (!isOpen) {
+      content.classList.add('open');
+      icon.style.transform = 'rotate(180deg)';
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+</script>
+</body>
+</html>

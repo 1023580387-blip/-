@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudFlow - 企业级智能运营平台 | B2B SaaS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a' }
+          },
+          animation: {
+            'spin-slow': 'spin 6s linear infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-10px)' } },
+            glow: { '0%': { boxShadow: '0 0 5px rgba(37,99,235,0.2)' }, '100%': { boxShadow: '0 0 20px rgba(37,99,235,0.4)' } }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .accordion-content.open { max-height: 500px; }
+    .nav-scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .feature-card:hover .feature-icon { transform: rotate(15deg) scale(1.1); }
+    .feature-card:hover .feature-card-glow { opacity: 1; }
+    .feature-card-glow { opacity: 0; transition: opacity 0.4s ease; }
+    .feature-icon { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .price-number { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .input-glow { transition: box-shadow 0.3s ease, border-color 0.3s ease; }
+    .input-glow:focus { box-shadow: 0 0 0 3px rgba(37,99,235,0.15); border-color: #2563eb; outline: none; }
+    .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .mobile-menu.open { max-height: 320px; }
+    @media (min-width: 1024px) {
+      .hero-gradient { background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37,99,235,0.08), transparent 60%); }
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- ========== NAVIGATION ========== -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      <a href="index.html" class="flex items-center gap-2.5 text-xl font-bold text-primary-600">
+        <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2563eb"/><path d="M10 22V12l6 5-6 5z" fill="white"/><path d="M16 22l6-10-6 10z" fill="rgba(255,255,255,0.6)"/></svg>
+        CloudFlow
+      </a>
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="index.html" class="text-sm font-medium text-primary-600">首页</a>
+        <a href="features.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">功能</a>
+        <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">定价</a>
+        <a href="docs.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">文档</a>
+      </div>
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-4 py-2">登录</a>
+        <a href="#" class="text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 px-5 py-2.5 rounded-lg transition-colors shadow-sm">免费试用</a>
+      </div>
+      <button id="menuBtn" class="lg:hidden p-2 text-gray-600 hover:text-gray-900" aria-label="菜单">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path id="menuIconOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/><path id="menuIconClose" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6L6 18" class="hidden"/></svg>
+      </button>
+    </div>
+    <div id="mobileMenu" class="mobile-menu lg:hidden">
+      <div class="py-4 space-y-2 border-t border-gray-100">
+        <a href="index.html" class="block px-3 py-2 text-sm font-medium text-primary-600 bg-primary-50 rounded-lg">首页</a>
+        <a href="features.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">功能</a>
+        <a href="pricing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">定价</a>
+        <a href="docs.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">文档</a>
+        <div class="flex gap-2 pt-2">
+          <a href="#" class="flex-1 text-center text-sm font-medium text-gray-600 border border-gray-200 py-2.5 rounded-lg hover:bg-gray-50">登录</a>
+          <a href="#" class="flex-1 text-center text-sm font-medium text-white bg-primary-600 py-2.5 rounded-lg hover:bg-primary-700">免费试用</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero-gradient pt-28 pb-16 lg:pt-36 lg:pb-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+      <div class="max-w-xl">
+        <div class="inline-flex items-center gap-2 bg-primary-50 border border-primary-100 rounded-full px-4 py-1.5 text-sm text-primary-700 font-medium mb-6">
+          <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+          全新 3.0 版本已发布
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
+          智能运营，<br><span class="text-primary-600">驱动业务增长</span>
+        </h1>
+        <p class="mt-6 text-lg text-gray-500 leading-relaxed">
+          CloudFlow 为企业提供一站式智能运营解决方案，集成数据分析、自动化工作流与团队协作，助力企业效率提升 300%。
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <a href="#" class="inline-flex items-center justify-center gap-2 bg-primary-600 text-white font-semibold px-8 py-3.5 rounded-xl hover:bg-primary-700 transition-colors shadow-lg shadow-primary-600/25">
+            免费开始使用
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+          </a>
+          <a href="#" class="inline-flex items-center justify-center gap-2 bg-white border border-gray-200 text-gray-700 font-semibold px-8 py-3.5 rounded-xl hover:bg-gray-50 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            观看演示
+          </a>
+        </div>
+        <div class="mt-6 flex items-center gap-4 text-sm text-gray-400">
+          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          无需信用卡 &nbsp;·&nbsp; 14 天免费试用 &nbsp;·&nbsp; 随时取消
+        </div>
+      </div>
+      <div class="mt-12 lg:mt-0 relative">
+        <div class="relative rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-gray-900/5 overflow-hidden">
+          <div class="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-100">
+            <div class="flex gap-1.5"><span class="w-3 h-3 rounded-full bg-red-400"></span><span class="w-3 h-3 rounded-full bg-yellow-400"></span><span class="w-3 h-3 rounded-full bg-green-400"></span></div>
+            <div class="flex-1 mx-4 bg-white rounded-md border border-gray-200 px-3 py-1 text-xs text-gray-400">app.cloudflow.io/dashboard</div>
+          </div>
+          <div class="p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div><div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">总营收</div><div class="text-2xl font-bold text-gray-900">¥128,430</div><div class="text-xs text-green-500">↑ 12.5%</div></div>
+              <div><div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">活跃用户</div><div class="text-2xl font-bold text-gray-900">2,847</div><div class="text-xs text-green-500">↑ 8.2%</div></div>
+              <div><div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">转化率</div><div class="text-2xl font-bold text-gray-900">3.24%</div><div class="text-xs text-green-500">↑ 2.1%</div></div>
+            </div>
+            <div class="h-40 bg-gray-50 rounded-xl flex items-end gap-2 px-2 pb-2">
+              <div class="flex-1 bg-primary-500 rounded-t-md" style="height:40%"></div><div class="flex-1 bg-primary-500 rounded-t-md" style="height:60%"></div><div class="flex-1 bg-primary-500 rounded-t-md" style="height:45%"></div><div class="flex-1 bg-primary-500 rounded-t-md" style="height:80%"></div><div class="flex-1 bg-primary-500 rounded-t-md" style="height:55%"></div><div class="flex-1 bg-primary-500 rounded-t-md" style="height:70%"></div><div class="flex-1 bg-primary-500 rounded-t-md" style="height:90%"></div><div class="flex-1 bg-primary-500 rounded-t-md" style="height:65%"></div><div class="flex-1 bg-primary-500 rounded-t-md" style="height:50%"></div><div class="flex-1 bg-primary-500 rounded-t-md" style="height:75%"></div><div class="flex-1 bg-primary-500 rounded-t-md" style="height:85%"></div><div class="flex-1 bg-primary-500 rounded-t-md" style="height:60%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-primary-500/10 rounded-2xl -z-10"></div>
+        <div class="absolute -top-4 -left-4 w-20 h-20 bg-primary-500/5 rounded-full -z-10"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STATS COUNTER ========== -->
+<section class="py-16 lg:py-20 bg-white border-y border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+      <div class="text-center">
+        <div class="text-4xl lg:text-5xl font-extrabold text-gray-900 counter" data-target="50000">0</div>
+        <div class="mt-2 text-sm text-gray-500">活跃企业客户</div>
+      </div>
+      <div class="text-center">
+        <div class="text-4xl lg:text-5xl font-extrabold text-gray-900"><span class="counter" data-target="99">0</span><span>%</span></div>
+        <div class="mt-2 text-sm text-gray-500">服务可用性 SLA</div>
+      </div>
+      <div class="text-center">
+        <div class="text-4xl lg:text-5xl font-extrabold text-gray-900"><span class="counter" data-target="120">0</span><span>亿+</span></div>
+        <div class="mt-2 text-sm text-gray-500">数据处理量 / 日</div>
+      </div>
+      <div class="text-center">
+        <div class="text-4xl lg:text-5xl font-extrabold text-gray-900"><span class="counter" data-target="300">0</span><span>%</span></div>
+        <div class="mt-2 text-sm text-gray-500">平均效率提升</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURES 6-GRID ========== -->
+<section class="py-20 lg:py-28 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <h2 class="text-3xl lg:text-4xl font-extrabold text-gray-900">一站式智能运营平台</h2>
+      <p class="mt-4 text-lg text-gray-500">六大核心模块，覆盖企业运营全链路，助力团队高效协作、数据驱动决策。</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <!-- Feature 1 -->
+      <div class="feature-card group relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-100 transition-all duration-300 cursor-pointer">
+        <div class="feature-card-glow absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-50/80 to-transparent pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="feature-icon w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">智能数据分析</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">实时数据看板与 AI 驱动的洞察报告，让决策有据可依。</p>
+        </div>
+      </div>
+      <!-- Feature 2 -->
+      <div class="feature-card group relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-100 transition-all duration-300 cursor-pointer">
+        <div class="feature-card-glow absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-50/80 to-transparent pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="feature-icon w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">自动化工作流</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">拖拽式流程编排，将重复性任务自动化，释放团队生产力。</p>
+        </div>
+      </div>
+      <!-- Feature 3 -->
+      <div class="feature-card group relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-100 transition-all duration-300 cursor-pointer">
+        <div class="feature-card-glow absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-50/80 to-transparent pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="feature-icon w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">团队协作中心</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">内置即时通讯、文档协作与项目管理，信息无缝流转。</p>
+        </div>
+      </div>
+      <!-- Feature 4 -->
+      <div class="feature-card group relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-100 transition-all duration-300 cursor-pointer">
+        <div class="feature-card-glow absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-50/80 to-transparent pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="feature-icon w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">企业级安全</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">SOC 2 认证、端到端加密、细粒度权限控制，数据安全无忧。</p>
+        </div>
+      </div>
+      <!-- Feature 5 -->
+      <div class="feature-card group relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-100 transition-all duration-300 cursor-pointer">
+        <div class="feature-card-glow absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-50/80 to-transparent pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="feature-icon w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">开放 API 集成</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">200+ 预置集成，RESTful API 与 Webhook，轻松对接现有系统。</p>
+        </div>
+      </div>
+      <!-- Feature 6 -->
+      <div class="feature-card group relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-100 transition-all duration-300 cursor-pointer">
+        <div class="feature-card-glow absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-50/80 to-transparent pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="feature-icon w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">全平台覆盖</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Web、iOS、Android 多端同步，随时随地掌握业务动态。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CLIENT LOGO WALL ========== -->
+<section class="py-16 lg:py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <p class="text-center text-sm text-gray-400 uppercase tracking-widest font-semibold mb-10">深受 50,000+ 企业信赖</p>
+    <div class="grid grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center opacity-50">
+      <div class="text-xl font-bold text-gray-400">Stripe</div>
+      <div class="text-xl font-bold text-gray-400">Shopify</div>
+      <div class="text-xl font-bold text-gray-400">Airbnb</div>
+      <div class="text-xl font-bold text-gray-400">Slack</div>
+      <div class="text-xl font-bold text-gray-400">Notion</div>
+      <div class="text-xl font-bold text-gray-400">Figma</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRICING TABLE ========== -->
+<section class="py-20 lg:py-28 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <h2 class="text-3xl lg:text-4xl font-extrabold text-gray-900">简单透明的定价</h2>
+      <p class="mt-4 text-lg text-gray-500">选择适合您团队规模的方案，所有方案均包含 14 天免费试用。</p>
+    </div>
+    <div class="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <!-- Starter -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col hover:shadow-lg transition-shadow">
+        <h3 class="text-lg font-bold text-gray-900">入门版</h3>
+        <p class="text-sm text-gray-500 mt-1">适合小型团队起步</p>
+        <div class="mt-6 mb-6">
+          <span class="text-4xl font-extrabold text-gray-900">¥299</span>
+          <span class="text-gray-400 text-sm">/月</span>
+        </div>
+        <ul class="space-y-3 text-sm text-gray-600 flex-1">
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>最多 5 名团队成员</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>基础数据分析</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>5 个自动化工作流</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>邮件客服支持</li>
+        </ul>
+        <a href="#" class="mt-8 block text-center py-3 border-2 border-gray-200 text-gray-700 font-semibold rounded-xl hover:border-primary-300 hover:text-primary-600 transition-all">开始试用</a>
+      </div>
+      <!-- Professional -->
+      <div class="bg-primary-600 text-white rounded-2xl p-8 flex flex-col relative scale-[1.03] shadow-xl shadow-primary-600/25">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-primary-600 text-xs font-bold px-4 py-1 rounded-full shadow-sm">最受欢迎</div>
+        <h3 class="text-lg font-bold">专业版</h3>
+        <p class="text-sm text-primary-200 mt-1">适合成长型企业</p>
+        <div class="mt-6 mb-6">
+          <span class="text-4xl font-extrabold">¥799</span>
+          <span class="text-primary-300 text-sm">/月</span>
+        </div>
+        <ul class="space-y-3 text-sm text-primary-100 flex-1">
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>最多 50 名团队成员</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>高级数据分析与 AI 预测</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>无限自动化工作流</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>优先客服支持</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>API 访问</li>
+        </ul>
+        <a href="#" class="mt-8 block text-center py-3 bg-white text-primary-600 font-semibold rounded-xl hover:bg-primary-50 transition-all">开始试用</a>
+      </div>
+      <!-- Enterprise -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col hover:shadow-lg transition-shadow">
+        <h3 class="text-lg font-bold text-gray-900">企业版</h3>
+        <p class="text-sm text-gray-500 mt-1">适合大型组织</p>
+        <div class="mt-6 mb-6">
+          <span class="text-4xl font-extrabold text-gray-900">定制</span>
+        </div>
+        <ul class="space-y-3 text-sm text-gray-600 flex-1">
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>无限团队成员</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>专属客户成功经理</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>私有化部署</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>SLA 保障 99.99%</li>
+        </ul>
+        <a href="#" class="mt-8 block text-center py-3 border-2 border-gray-200 text-gray-700 font-semibold rounded-xl hover:border-primary-300 hover:text-primary-600 transition-all">联系销售</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ACCORDION ========== -->
+<section class="py-20 lg:py-28 bg-white">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl lg:text-4xl font-extrabold text-gray-900">常见问题</h2>
+      <p class="mt-4 text-lg text-gray-500">关于 CloudFlow 的常见疑问，这里都有答案。</p>
+    </div>
+    <div class="space-y-3">
+      <!-- FAQ 1 -->
+      <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
+          <span>CloudFlow 是否提供免费试用？</span>
+          <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content px-6">
+          <p class="pb-4 text-gray-500 text-sm leading-relaxed">是的，所有方案均提供 14 天免费试用，无需信用卡。试用期间您可以完整体验所有功能，试用结束后可选择升级到付费方案或自动降级为免费版。</p>
+        </div>
+      </div>
+      <!-- FAQ 2 -->
+      <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
+          <span>数据安全如何保障？</span>
+          <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content px-6">
+          <p class="pb-4 text-gray-500 text-sm leading-relaxed">CloudFlow 已通过 SOC 2 Type II 认证，所有数据传输采用 TLS 1.3 加密，存储采用 AES-256 加密。我们提供细粒度的 RBAC 权限控制和完整的审计日志，确保您的数据安全合规。</p>
+        </div>
+      </div>
+      <!-- FAQ 3 -->
+      <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
+          <span>支持哪些第三方集成？</span>
+          <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content px-6">
+          <p class="pb-4 text-gray-500 text-sm leading-relaxed">我们提供 200+ 预置集成，包括企业微信、钉钉、飞书、Slack、Jira、GitHub、Salesforce、HubSpot 等主流工具。同时提供开放的 RESTful API 和 Webhook，方便您自定义集成。</p>
+        </div>
+      </div>
+      <!-- FAQ 4 -->
+      <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
+          <span>是否支持私有化部署？</span>
+          <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content px-6">
+          <p class="pb-4 text-gray-500 text-sm leading-relaxed">企业版支持私有化部署，可部署在您的自有服务器或私有云环境中。我们提供完整的部署文档和专属技术支持，确保平稳上线。详情请联系销售团队获取定制方案。</p>
+        </div>
+      </div>
+      <!-- FAQ 5 -->
+      <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
+          <span>如何升级或降级套餐？</span>
+          <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content px-6">
+          <p class="pb-4 text-gray-500 text-sm leading-relaxed">您可以在后台随时自助升级或降级套餐。升级立即生效，按比例计费；降级将在当前计费周期结束后生效。所有数据在套餐变更时均得到保留，不会丢失。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="py-20 lg:py-28 bg-primary-600">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl lg:text-4xl font-extrabold text-white">准备好提升您的运营效率了吗？</h2>
+    <p class="mt-4 text-lg text-primary-200">加入 50,000+ 企业，用 CloudFlow 驱动业务增长。免费试用 14 天，无需信用卡。</p>
+    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+      <a href="#" class="inline-flex items-center justify-center gap-2 bg-white text-primary-600 font-semibold px-8 py-3.5 rounded-xl hover:bg-primary-50 transition-colors shadow-lg">
+        免费开始使用
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+      </a>
+      <a href="#" class="inline-flex items-center justify-center gap-2 border-2 border-white/30 text-white font-semibold px-8 py-3.5 rounded-xl hover:bg-white/10 transition-colors">
+        预约演示
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="bg-gray-900 text-gray-400 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div class="lg:col-span-2">
+        <a href="index.html" class="flex items-center gap-2 text-white text-xl font-bold mb-4">
+          <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2563eb"/><path d="M10 22V12l6 5-6 5z" fill="white"/><path d="M16 22l6-10-6 10z" fill="rgba(255,255,255,0.6)"/></svg>
+          CloudFlow
+        </a>
+        <p class="text-sm leading-relaxed max-w-xs">企业级智能运营平台，帮助团队高效协作、数据驱动决策，实现业务持续增长。</p>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">产品</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="features.html" class="hover:text-white transition-colors">功能</a></li>
+          <li><a href="pricing.html" class="hover:text-white transition-colors">定价</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">集成</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">更新日志</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">资源</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="docs.html" class="hover:text-white transition-colors">文档</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">API 参考</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">博客</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">社区</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">公司</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">关于我们</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">招聘</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">隐私政策</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">服务条款</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-12 pt-8 border-t border-gray-800 text-sm text-center">
+      &copy; 2026 CloudFlow. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+// ========== NAVIGATION SCROLL ==========
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('nav-scrolled', window.scrollY > 20);
+});
+
+// ========== MOBILE MENU ==========
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const iconOpen = document.getElementById('menuIconOpen');
+const iconClose = document.getElementById('menuIconClose');
+let menuOpen = false;
+menuBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  mobileMenu.classList.toggle('open', menuOpen);
+  iconOpen.classList.toggle('hidden', menuOpen);
+  iconClose.classList.toggle('hidden', !menuOpen);
+  menuBtn.setAttribute('aria-expanded', menuOpen);
+});
+
+// ========== COUNTER ANIMATION ==========
+function animateCounter(el, target, duration = 2000) {
+  const startTime = performance.now();
+  function update(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 4);
+    const current = Math.floor(target * eased);
+    el.textContent = current.toLocaleString();
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = target.toLocaleString();
+  }
+  requestAnimationFrame(update);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.target);
+      if (target && !el.dataset.animated) {
+        el.dataset.animated = 'true';
+        animateCounter(el, target);
+      }
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+// ========== FAQ ACCORDION ==========
+document.querySelectorAll('.faq-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const content = btn.nextElementSibling;
+    const icon = btn.querySelector('.faq-icon');
+    const isOpen = content.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.accordion-content.open').forEach(c => c.classList.remove('open'));
+    document.querySelectorAll('.faq-icon').forEach(i => i.style.transform = 'rotate(0deg)');
+    document.querySelectorAll('.faq-toggle').forEach(b => b.setAttribute('aria-expanded', 'false'));
+    // Open clicked
+    if (!isOpen) {
+      content.classList.add('open');
+      icon.style.transform = 'rotate(180deg)';
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+</script>
+</body>
+</html>

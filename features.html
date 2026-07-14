@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>功能特性 - CloudFlow 企业级智能运营平台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .nav-scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .mobile-menu.open { max-height: 320px; }
+    .feature-card:hover .feature-icon { transform: rotate(15deg) scale(1.1); }
+    .feature-card:hover .feature-card-glow { opacity: 1; }
+    .feature-card-glow { opacity: 0; transition: opacity 0.4s ease; }
+    .feature-icon { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .input-glow { transition: box-shadow 0.3s ease, border-color 0.3s ease; }
+    .input-glow:focus { box-shadow: 0 0 0 3px rgba(37,99,235,0.15); border-color: #2563eb; outline: none; }
+    .feature-block { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .feature-block.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- ========== NAVIGATION ========== -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-scrolled">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      <a href="index.html" class="flex items-center gap-2.5 text-xl font-bold text-primary-600">
+        <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2563eb"/><path d="M10 22V12l6 5-6 5z" fill="white"/><path d="M16 22l6-10-6 10z" fill="rgba(255,255,255,0.6)"/></svg>
+        CloudFlow
+      </a>
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="index.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">首页</a>
+        <a href="features.html" class="text-sm font-medium text-primary-600">功能</a>
+        <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">定价</a>
+        <a href="docs.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">文档</a>
+      </div>
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-4 py-2">登录</a>
+        <a href="#" class="text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 px-5 py-2.5 rounded-lg transition-colors shadow-sm">免费试用</a>
+      </div>
+      <button id="menuBtn" class="lg:hidden p-2 text-gray-600 hover:text-gray-900" aria-label="菜单">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path id="menuIconOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/><path id="menuIconClose" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6L6 18" class="hidden"/></svg>
+      </button>
+    </div>
+    <div id="mobileMenu" class="mobile-menu lg:hidden">
+      <div class="py-4 space-y-2 border-t border-gray-100">
+        <a href="index.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">首页</a>
+        <a href="features.html" class="block px-3 py-2 text-sm font-medium text-primary-600 bg-primary-50 rounded-lg">功能</a>
+        <a href="pricing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">定价</a>
+        <a href="docs.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">文档</a>
+        <div class="flex gap-2 pt-2">
+          <a href="#" class="flex-1 text-center text-sm font-medium text-gray-600 border border-gray-200 py-2.5 rounded-lg hover:bg-gray-50">登录</a>
+          <a href="#" class="flex-1 text-center text-sm font-medium text-white bg-primary-600 py-2.5 rounded-lg hover:bg-primary-700">免费试用</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== PAGE HEADER ========== -->
+<section class="pt-28 pb-12 lg:pt-36 lg:pb-16 bg-gradient-to-b from-primary-50/50 to-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900">探索全部功能</h1>
+    <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">CloudFlow 提供六大核心模块，从数据分析到自动化工作流，全方位赋能企业运营。</p>
+  </div>
+</section>
+
+<!-- ========== FEATURE 1: 数据分析 - 图左文右 ========== -->
+<section class="py-16 lg:py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="feature-block lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+      <div class="relative">
+        <div class="rounded-2xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+          <div class="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-100">
+            <div class="flex gap-1.5"><span class="w-3 h-3 rounded-full bg-red-400"></span><span class="w-3 h-3 rounded-full bg-yellow-400"></span><span class="w-3 h-3 rounded-full bg-green-400"></span></div>
+            <span class="text-xs text-gray-400 ml-2">数据分析面板</span>
+          </div>
+          <div class="p-6 space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl p-4">
+                <div class="text-xs text-gray-500 font-medium">总收入</div>
+                <div class="text-xl font-bold text-gray-900 mt-1">¥128,430</div>
+                <div class="text-xs text-green-500 mt-1">↑ 12.5% vs 上月</div>
+              </div>
+              <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl p-4">
+                <div class="text-xs text-gray-500 font-medium">活跃用户</div>
+                <div class="text-xl font-bold text-gray-900 mt-1">2,847</div>
+                <div class="text-xs text-green-500 mt-1">↑ 8.2% vs 上月</div>
+              </div>
+            </div>
+            <div class="h-32 bg-gray-50 rounded-xl flex items-end gap-1.5 px-3 pb-3">
+              <div class="flex-1 bg-primary-400 rounded-t-sm" style="height:40%"></div><div class="flex-1 bg-primary-400 rounded-t-sm" style="height:60%"></div><div class="flex-1 bg-primary-400 rounded-t-sm" style="height:45%"></div><div class="flex-1 bg-primary-400 rounded-t-sm" style="height:80%"></div><div class="flex-1 bg-primary-400 rounded-t-sm" style="height:55%"></div><div class="flex-1 bg-primary-400 rounded-t-sm" style="height:70%"></div><div class="flex-1 bg-primary-400 rounded-t-sm" style="height:90%"></div><div class="flex-1 bg-primary-400 rounded-t-sm" style="height:65%"></div><div class="flex-1 bg-primary-400 rounded-t-sm" style="height:50%"></div><div class="flex-1 bg-primary-400 rounded-t-sm" style="height:75%"></div><div class="flex-1 bg-primary-400 rounded-t-sm" style="height:85%"></div><div class="flex-1 bg-primary-400 rounded-t-sm" style="height:60%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-4 -right-4 w-20 h-20 bg-primary-500/10 rounded-2xl -z-10"></div>
+      </div>
+      <div class="mt-10 lg:mt-0">
+        <span class="inline-block bg-primary-50 text-primary-700 text-xs font-semibold px-3 py-1 rounded-full mb-4">核心功能</span>
+        <h2 class="text-3xl font-extrabold text-gray-900">智能数据分析</h2>
+        <p class="mt-4 text-gray-500 leading-relaxed">实时数据看板，支持自定义指标与多维度下钻分析。AI 引擎自动识别异常趋势，推送智能洞察报告，让数据驱动每一次决策。</p>
+        <ul class="mt-6 space-y-3 text-sm text-gray-600">
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>实时数据看板，秒级刷新</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>AI 异常检测与智能预警</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>自定义报表与一键导出</li>
+        </ul>
+        <a href="#" class="inline-flex items-center gap-2 mt-6 text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">了解更多 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURE 2: 自动化 - 图右文左 ========== -->
+<section class="py-16 lg:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="feature-block lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+      <div class="order-2 lg:order-1 mt-10 lg:mt-0">
+        <span class="inline-block bg-primary-50 text-primary-700 text-xs font-semibold px-3 py-1 rounded-full mb-4">核心功能</span>
+        <h2 class="text-3xl font-extrabold text-gray-900">自动化工作流</h2>
+        <p class="mt-4 text-gray-500 leading-relaxed">拖拽式流程编排引擎，零代码构建自动化任务。支持条件判断、定时触发、多步骤审批，将重复性工作交给系统，释放团队创造力。</p>
+        <ul class="mt-6 space-y-3 text-sm text-gray-600">
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>可视化拖拽编辑，零代码上手</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>100+ 预置触发器与动作模板</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>执行日志与错误重试机制</li>
+        </ul>
+        <a href="#" class="inline-flex items-center gap-2 mt-6 text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">了解更多 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+      </div>
+      <div class="order-1 lg:order-2 relative">
+        <div class="rounded-2xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+          <div class="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-100">
+            <div class="flex gap-1.5"><span class="w-3 h-3 rounded-full bg-red-400"></span><span class="w-3 h-3 rounded-full bg-yellow-400"></span><span class="w-3 h-3 rounded-full bg-green-400"></span></div>
+            <span class="text-xs text-gray-400 ml-2">工作流编辑器</span>
+          </div>
+          <div class="p-6">
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 p-3 bg-primary-50 border border-primary-100 rounded-xl">
+                <div class="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                <div><div class="text-sm font-semibold text-gray-900">触发器</div><div class="text-xs text-gray-500">新用户注册时</div></div>
+              </div>
+              <div class="flex justify-center"><svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg></div>
+              <div class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl">
+                <div class="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                <div><div class="text-sm font-semibold text-gray-900">条件判断</div><div class="text-xs text-gray-500">是否为企业邮箱</div></div>
+              </div>
+              <div class="flex justify-center"><svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg></div>
+              <div class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl">
+                <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+                <div><div class="text-sm font-semibold text-gray-900">动作</div><div class="text-xs text-gray-500">发送欢迎邮件</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-4 -left-4 w-20 h-20 bg-primary-500/10 rounded-2xl -z-10"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURE 3: 团队协作 - 图左文右 ========== -->
+<section class="py-16 lg:py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="feature-block lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+      <div class="relative">
+        <div class="rounded-2xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+          <div class="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-100">
+            <div class="flex gap-1.5"><span class="w-3 h-3 rounded-full bg-red-400"></span><span class="w-3 h-3 rounded-full bg-yellow-400"></span><span class="w-3 h-3 rounded-full bg-green-400"></span></div>
+            <span class="text-xs text-gray-400 ml-2">团队协作中心</span>
+          </div>
+          <div class="p-6 space-y-3">
+            <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">
+              <div class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white text-xs font-bold">李</div>
+              <div class="flex-1"><div class="text-sm font-semibold">李明明</div><div class="text-xs text-gray-500 mt-0.5">Q3 数据报告已更新，请大家 review ➤</div></div>
+              <span class="text-xs text-gray-400">10:32</span>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">
+              <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white text-xs font-bold">王</div>
+              <div class="flex-1"><div class="text-sm font-semibold">王芳</div><div class="text-xs text-gray-500 mt-0.5">收到，我下午看。附件里加了竞品分析</div></div>
+              <span class="text-xs text-gray-400">10:35</span>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">
+              <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold">张</div>
+              <div class="flex-1"><div class="text-sm font-semibold">张伟</div><div class="text-xs text-gray-500 mt-0.5">👍 数据很清晰，明天周会用这个</div></div>
+              <span class="text-xs text-gray-400">10:38</span>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-4 -right-4 w-20 h-20 bg-primary-500/10 rounded-2xl -z-10"></div>
+      </div>
+      <div class="mt-10 lg:mt-0">
+        <span class="inline-block bg-primary-50 text-primary-700 text-xs font-semibold px-3 py-1 rounded-full mb-4">核心功能</span>
+        <h2 class="text-3xl font-extrabold text-gray-900">团队协作中心</h2>
+        <p class="mt-4 text-gray-500 leading-relaxed">内置即时通讯、在线文档与项目管理工具，信息无缝流转。支持频道、私聊、文件共享，让团队沟通协作更高效。</p>
+        <ul class="mt-6 space-y-3 text-sm text-gray-600">
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>即时通讯，消息已读/未读状态</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>在线文档协同编辑</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>看板与甘特图项目管理</li>
+        </ul>
+        <a href="#" class="inline-flex items-center gap-2 mt-6 text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">了解更多 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURE 4: 安全管理 - 图右文左 ========== -->
+<section class="py-16 lg:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="feature-block lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+      <div class="order-2 lg:order-1 mt-10 lg:mt-0">
+        <span class="inline-block bg-primary-50 text-primary-700 text-xs font-semibold px-3 py-1 rounded-full mb-4">核心功能</span>
+        <h2 class="text-3xl font-extrabold text-gray-900">企业级安全</h2>
+        <p class="mt-4 text-gray-500 leading-relaxed">SOC 2 Type II 认证，端到端加密，细粒度 RBAC 权限控制。完整的审计日志与操作追溯，满足企业合规要求。</p>
+        <ul class="mt-6 space-y-3 text-sm text-gray-600">
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>SOC 2 Type II 认证</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>数据加密传输与存储</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>SSO 单点登录与 MFA 多因素认证</li>
+        </ul>
+        <a href="#" class="inline-flex items-center gap-2 mt-6 text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">了解更多 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+      </div>
+      <div class="order-1 lg:order-2 relative">
+        <div class="rounded-2xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+          <div class="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-100">
+            <div class="flex gap-1.5"><span class="w-3 h-3 rounded-full bg-red-400"></span><span class="w-3 h-3 rounded-full bg-yellow-400"></span><span class="w-3 h-3 rounded-full bg-green-400"></span></div>
+            <span class="text-xs text-gray-400 ml-2">安全控制台</span>
+          </div>
+          <div class="p-6 space-y-4">
+            <div class="flex items-center justify-between p-3 bg-green-50 border border-green-100 rounded-xl">
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                <span class="text-sm font-semibold text-green-800">SOC 2 认证状态</span>
+              </div>
+              <span class="text-xs bg-green-500 text-white px-2 py-0.5 rounded-full">通过</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3 bg-gray-50 rounded-xl text-center">
+                <div class="text-xl font-bold text-gray-900">2FA</div>
+                <div class="text-xs text-gray-500">已启用</div>
+              </div>
+              <div class="p-3 bg-gray-50 rounded-xl text-center">
+                <div class="text-xl font-bold text-gray-900">TLS 1.3</div>
+                <div class="text-xs text-gray-500">传输加密</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-4 -left-4 w-20 h-20 bg-primary-500/10 rounded-2xl -z-10"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURE 5: API 集成 - 图左文右 ========== -->
+<section class="py-16 lg:py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="feature-block lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+      <div class="relative">
+        <div class="rounded-2xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+          <div class="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-100">
+            <div class="flex gap-1.5"><span class="w-3 h-3 rounded-full bg-red-400"></span><span class="w-3 h-3 rounded-full bg-yellow-400"></span><span class="w-3 h-3 rounded-full bg-green-400"></span></div>
+            <span class="text-xs text-gray-400 ml-2">API 集成中心</span>
+          </div>
+          <div class="p-6">
+            <div class="grid grid-cols-4 gap-3">
+              <div class="p-3 bg-gray-50 rounded-xl text-center"><div class="text-lg font-bold text-gray-900">🐙</div><div class="text-xs text-gray-500 mt-1">GitHub</div></div>
+              <div class="p-3 bg-gray-50 rounded-xl text-center"><div class="text-lg font-bold text-gray-900">💬</div><div class="text-xs text-gray-500 mt-1">Slack</div></div>
+              <div class="p-3 bg-gray-50 rounded-xl text-center"><div class="text-lg font-bold text-gray-900">📊</div><div class="text-xs text-gray-500 mt-1">Jira</div></div>
+              <div class="p-3 bg-gray-50 rounded-xl text-center"><div class="text-lg font-bold text-gray-900">📧</div><div class="text-xs text-gray-500 mt-1">HubSpot</div></div>
+              <div class="p-3 bg-gray-50 rounded-xl text-center"><div class="text-lg font-bold text-gray-900">🐳</div><div class="text-xs text-gray-500 mt-1">Docker</div></div>
+              <div class="p-3 bg-gray-50 rounded-xl text-center"><div class="text-lg font-bold text-gray-900">🗄️</div><div class="text-xs text-gray-500 mt-1">MySQL</div></div>
+              <div class="p-3 bg-gray-50 rounded-xl text-center"><div class="text-lg font-bold text-gray-900">🔗</div><div class="text-xs text-gray-500 mt-1">Zapier</div></div>
+              <div class="p-3 bg-primary-50 rounded-xl text-center border border-primary-100"><div class="text-lg font-bold text-primary-600">+</div><div class="text-xs text-primary-500 mt-1">200+</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-4 -right-4 w-20 h-20 bg-primary-500/10 rounded-2xl -z-10"></div>
+      </div>
+      <div class="mt-10 lg:mt-0">
+        <span class="inline-block bg-primary-50 text-primary-700 text-xs font-semibold px-3 py-1 rounded-full mb-4">核心功能</span>
+        <h2 class="text-3xl font-extrabold text-gray-900">开放 API 集成</h2>
+        <p class="mt-4 text-gray-500 leading-relaxed">200+ 预置应用集成，丰富的 RESTful API 与 Webhook 支持。轻松对接现有系统，打造统一的工作平台。</p>
+        <ul class="mt-6 space-y-3 text-sm text-gray-600">
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>200+ 预置应用一键连接</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>RESTful API + Webhook</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-primary-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>自定义应用开发 SDK</li>
+        </ul>
+        <a href="#" class="inline-flex items-center gap-2 mt-6 text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">了解更多 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="py-20 lg:py-28 bg-primary-600">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl lg:text-4xl font-extrabold text-white">准备好体验 CloudFlow 了吗？</h2>
+    <p class="mt-4 text-lg text-primary-200">免费试用 14 天，完整体验全部功能，无需信用卡。</p>
+    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+      <a href="#" class="inline-flex items-center justify-center gap-2 bg-white text-primary-600 font-semibold px-8 py-3.5 rounded-xl hover:bg-primary-50 transition-colors shadow-lg">
+        免费开始使用
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="bg-gray-900 text-gray-400 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div class="lg:col-span-2">
+        <a href="index.html" class="flex items-center gap-2 text-white text-xl font-bold mb-4">
+          <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2563eb"/><path d="M10 22V12l6 5-6 5z" fill="white"/><path d="M16 22l6-10-6 10z" fill="rgba(255,255,255,0.6)"/></svg>
+          CloudFlow
+        </a>
+        <p class="text-sm leading-relaxed max-w-xs">企业级智能运营平台，帮助团队高效协作、数据驱动决策，实现业务持续增长。</p>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">产品</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="features.html" class="hover:text-white transition-colors">功能</a></li>
+          <li><a href="pricing.html" class="hover:text-white transition-colors">定价</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">集成</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">更新日志</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">资源</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="docs.html" class="hover:text-white transition-colors">文档</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">API 参考</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">博客</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">社区</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">公司</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">关于我们</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">招聘</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">隐私政策</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">服务条款</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-12 pt-8 border-t border-gray-800 text-sm text-center">
+      &copy; 2026 CloudFlow. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile menu toggle
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const iconOpen = document.getElementById('menuIconOpen');
+const iconClose = document.getElementById('menuIconClose');
+let menuOpen = false;
+menuBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  mobileMenu.classList.toggle('open', menuOpen);
+  iconOpen.classList.toggle('hidden', menuOpen);
+  iconClose.classList.toggle('hidden', !menuOpen);
+});
+
+// Scroll reveal animation
+const featureObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.feature-block').forEach(el => featureObserver.observe(el));
+</script>
+</body>
+</html>

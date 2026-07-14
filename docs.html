@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>帮助文档 - CloudFlow 企业级智能运营平台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    .nav-scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .mobile-menu.open { max-height: 320px; }
+    .input-glow { transition: box-shadow 0.3s ease, border-color 0.3s ease; }
+    .input-glow:focus { box-shadow: 0 0 0 3px rgba(37,99,235,0.15); border-color: #2563eb; outline: none; }
+    .sidebar-link { transition: all 0.2s ease; }
+    .sidebar-link.active { color: #2563eb; background: #eff6ff; border-left-color: #2563eb; }
+    .sidebar-link:hover:not(.active) { background: #f9fafb; }
+    .doc-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; }
+    .doc-content h2:first-child { margin-top: 0; }
+    .doc-content h3 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
+    .doc-content p { margin-bottom: 1rem; line-height: 1.75; }
+    .doc-content ul { margin-bottom: 1rem; padding-left: 1.5rem; }
+    .doc-content li { margin-bottom: 0.5rem; line-height: 1.75; }
+    .doc-content .code-block { background: #1e293b; color: #e2e8f0; border-radius: 0.75rem; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; overflow-x: auto; font-size: 0.875rem; line-height: 1.7; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .doc-content .inline-code { background: #f1f5f9; color: #1e293b; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.875rem; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .doc-content .callout { border-left: 4px solid #2563eb; background: #eff6ff; padding: 1rem 1.25rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 1.25rem; }
+    .doc-content .callout p { margin-bottom: 0; }
+    .sidebar-scroll { max-height: calc(100vh - 120px); overflow-y: auto; position: sticky; top: 100px; }
+    @media (max-width: 1023px) {
+      .sidebar-scroll { max-height: none; position: static; }
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- ========== NAVIGATION ========== -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-scrolled">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      <a href="index.html" class="flex items-center gap-2.5 text-xl font-bold text-primary-600">
+        <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2563eb"/><path d="M10 22V12l6 5-6 5z" fill="white"/><path d="M16 22l6-10-6 10z" fill="rgba(255,255,255,0.6)"/></svg>
+        CloudFlow
+      </a>
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="index.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">首页</a>
+        <a href="features.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">功能</a>
+        <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">定价</a>
+        <a href="docs.html" class="text-sm font-medium text-primary-600">文档</a>
+      </div>
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-4 py-2">登录</a>
+        <a href="#" class="text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 px-5 py-2.5 rounded-lg transition-colors shadow-sm">免费试用</a>
+      </div>
+      <button id="menuBtn" class="lg:hidden p-2 text-gray-600 hover:text-gray-900" aria-label="菜单">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path id="menuIconOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/><path id="menuIconClose" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6L6 18" class="hidden"/></svg>
+      </button>
+    </div>
+    <div id="mobileMenu" class="mobile-menu lg:hidden">
+      <div class="py-4 space-y-2 border-t border-gray-100">
+        <a href="index.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">首页</a>
+        <a href="features.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">功能</a>
+        <a href="pricing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">定价</a>
+        <a href="docs.html" class="block px-3 py-2 text-sm font-medium text-primary-600 bg-primary-50 rounded-lg">文档</a>
+        <div class="flex gap-2 pt-2">
+          <a href="#" class="flex-1 text-center text-sm font-medium text-gray-600 border border-gray-200 py-2.5 rounded-lg hover:bg-gray-50">登录</a>
+          <a href="#" class="flex-1 text-center text-sm font-medium text-white bg-primary-600 py-2.5 rounded-lg hover:bg-primary-700">免费试用</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== DOCS LAYOUT ========== -->
+<div class="pt-20 lg:pt-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="lg:grid lg:grid-cols-[260px_1fr] lg:gap-10">
+      
+      <!-- ===== SIDEBAR ===== -->
+      <aside class="hidden lg:block">
+        <div class="sidebar-scroll py-8 pr-4">
+          <div class="mb-6">
+            <input type="search" placeholder="搜索文档..." class="input-glow w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:border-primary-500" aria-label="搜索文档">
+          </div>
+          <nav class="space-y-1" id="sidebarNav">
+            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">快速开始</p>
+            <a href="#overview" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">概览</a>
+            <a href="#quickstart" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">快速入门</a>
+            <a href="#installation" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">安装与配置</a>
+            
+            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2 mt-6">核心功能</p>
+            <a href="#dashboard" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">数据看板</a>
+            <a href="#workflows" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">自动化工作流</a>
+            <a href="#collaboration" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">团队协作</a>
+            
+            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2 mt-6">API 参考</p>
+            <a href="#api-auth" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">认证</a>
+            <a href="#api-endpoints" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">接口列表</a>
+            <a href="#api-errors" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">错误码</a>
+            
+            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2 mt-6">账号管理</p>
+            <a href="#account-settings" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">账号设置</a>
+            <a href="#billing" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">计费与发票</a>
+            <a href="#security" class="sidebar-link block px-3 py-2 text-sm text-gray-600 border-l-2 border-transparent rounded-r-lg">安全设置</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Mobile sidebar toggle -->
+      <div class="lg:hidden py-4 border-b border-gray-100 mb-4">
+        <button id="mobileSidebarBtn" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          文档目录
+        </button>
+        <div id="mobileSidebar" class="mobile-menu mt-2">
+          <nav class="space-y-1 py-2">
+            <a href="#overview" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">概览</a>
+            <a href="#quickstart" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">快速入门</a>
+            <a href="#installation" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">安装与配置</a>
+            <a href="#dashboard" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">数据看板</a>
+            <a href="#workflows" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">自动化工作流</a>
+            <a href="#collaboration" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">团队协作</a>
+            <a href="#api-auth" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">API 认证</a>
+            <a href="#api-endpoints" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">API 接口列表</a>
+            <a href="#api-errors" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">API 错误码</a>
+            <a href="#account-settings" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">账号设置</a>
+            <a href="#billing" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">计费与发票</a>
+            <a href="#security" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">安全设置</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- ===== MAIN CONTENT ===== -->
+      <main class="doc-content py-8 max-w-none lg:max-w-3xl">
+        
+        <!-- Overview -->
+        <section id="overview">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">概览</h2>
+          <p>CloudFlow 是一款企业级智能运营平台，集成了数据分析、自动化工作流、团队协作等核心功能。本帮助文档将引导您快速上手并深入使用 CloudFlow 的各项功能。</p>
+          <div class="callout">
+            <p><strong>提示：</strong>如果您是第一次使用 CloudFlow，建议从「快速入门」章节开始，10 分钟即可完成基本配置。</p>
+          </div>
+          <h3>平台架构</h3>
+          <p>CloudFlow 采用微服务架构，由以下核心服务组成：</p>
+          <ul>
+            <li><strong>数据引擎</strong> — 实时数据处理与分析，支持 PB 级数据查询</li>
+            <li><strong>工作流引擎</strong> — 可视化流程编排，支持条件分支与并行执行</li>
+            <li><strong>协作服务</strong> — 即时通讯、文档协作、项目管理</li>
+            <li><strong>集成网关</strong> — API 管理与第三方应用集成</li>
+            <li><strong>安全中心</strong> — 统一认证、权限管理与审计日志</li>
+          </ul>
+          <h3>支持平台</h3>
+          <ul>
+            <li>Web 端：Chrome 90+、Firefox 90+、Safari 15+、Edge 90+</li>
+            <li>桌面端：macOS 12+、Windows 10/11</li>
+            <li>移动端：iOS 15+、Android 12+</li>
+          </ul>
+        </section>
+
+        <!-- Quick Start -->
+        <section id="quickstart">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">快速入门</h2>
+          <p>通过以下步骤，您可以在几分钟内完成 CloudFlow 的基础配置，开始使用核心功能。</p>
+          
+          <h3>第一步：创建团队</h3>
+          <p>注册账号后，系统会引导您创建第一个团队。输入团队名称，选择行业类型，系统将自动推荐适合的模板配置。</p>
+          
+          <h3>第二步：邀请成员</h3>
+          <p>通过邮箱邀请团队成员加入。您可以为每位成员设置不同的角色权限：</p>
+          <ul>
+            <li><strong>管理员</strong> — 拥有全部管理权限，可修改团队设置</li>
+            <li><strong>编辑者</strong> — 可创建和编辑内容，管理项目</li>
+            <li><strong>查看者</strong> — 只读权限，可查看数据和报表</li>
+          </ul>
+          
+          <h3>第三步：连接数据源</h3>
+          <p>CloudFlow 支持多种数据源接入方式。以 MySQL 为例：</p>
+          <div class="code-block">
+<span style="color:#94a3b8;"># 在平台设置中添加数据源</span>
+<span style="color:#7dd3fc;">POST</span> /api/v1/datasources
+<span style="color:#94a3b8;">Content-Type:</span> application/json
+
+{
+  <span style="color:#7dd3fc;">"type"</span>: <span style="color:#a5d6a7;">"mysql"</span>,
+  <span style="color:#7dd3fc;">"host"</span>: <span style="color:#a5d6a7;">"db.example.com"</span>,
+  <span style="color:#7dd3fc;">"port"</span>: 3306,
+  <span style="color:#7dd3fc;">"database"</span>: <span style="color:#a5d6a7;">"analytics"</span>
+}
+          </div>
+          
+          <h3>第四步：创建首个看板</h3>
+          <p>进入「数据看板」模块，点击「新建看板」，选择数据源和可视化图表类型，拖拽即可完成配置。</p>
+        </section>
+
+        <!-- Installation -->
+        <section id="installation">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">安装与配置</h2>
+          <p>CloudFlow 提供云端 SaaS 和私有化部署两种方式。本节介绍私有化部署的基本流程。</p>
+          
+          <h3>系统要求</h3>
+          <ul>
+            <li>操作系统：Linux (Ubuntu 20.04+ / CentOS 8+)</li>
+            <li>CPU：4 核及以上</li>
+            <li>内存：16 GB 及以上</li>
+            <li>磁盘：100 GB SSD 及以上</li>
+            <li>Docker 20.10+ 与 Docker Compose 2.0+</li>
+          </ul>
+          
+          <h3>Docker 部署</h3>
+          <p>使用 Docker Compose 一键部署：</p>
+          <div class="code-block">
+<span style="color:#94a3b8;"># 下载部署包</span>
+wget https://releases.cloudflow.io/latest/docker-compose.yml
+
+<span style="color:#94a3b8;"># 配置环境变量</span>
+cp .env.example .env
+<span style="color:#94a3b8;"># 编辑 .env 文件，设置数据库密码等参数</span>
+
+<span style="color:#94a3b8;"># 启动服务</span>
+docker compose up -d
+
+<span style="color:#94a3b8;"># 验证服务状态</span>
+docker compose ps
+          </div>
+          
+          <h3>初始化配置</h3>
+          <p>服务启动后，访问 <span class="inline-code">http://your-server:8080/setup</span> 进入初始化向导，设置管理员账号和企业信息。完成后即可正常使用。</p>
+        </section>
+
+        <!-- Dashboard -->
+        <section id="dashboard">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">数据看板</h2>
+          <p>数据看板是 CloudFlow 的核心功能之一，提供实时数据可视化和分析能力。</p>
+          
+          <h3>创建看板</h3>
+          <p>在左侧导航栏点击「数据看板」→「新建看板」，选择空白看板或从模板创建。CloudFlow 提供 20+ 行业模板，涵盖电商、SaaS、金融等场景。</p>
+          
+          <h3>图表类型</h3>
+          <ul>
+            <li><strong>折线图</strong> — 展示趋势变化，支持多指标对比</li>
+            <li><strong>柱状图</strong> — 分类对比，支持堆叠和分组</li>
+            <li><strong>饼图/环形图</strong> — 占比分析</li>
+            <li><strong>表格</strong> — 明细数据展示，支持排序和筛选</li>
+            <li><strong>数字卡片</strong> — 关键指标突出显示</li>
+            <li><strong>地图</strong> — 地域分布可视化</li>
+          </ul>
+          
+          <h3>数据筛选与下钻</h3>
+          <p>每个图表支持全局筛选器联动。点击图表中的数据点可下钻查看明细数据。筛选条件包括时间范围、维度过滤、自定义 SQL 筛选等。</p>
+          
+          <div class="callout">
+            <p><strong>最佳实践：</strong>建议为每个业务场景创建独立的看板，避免单个看板图表过多导致加载缓慢。关键指标建议使用数字卡片置顶展示。</p>
+          </div>
+        </section>
+
+        <!-- Workflows -->
+        <section id="workflows">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">自动化工作流</h2>
+          <p>自动化工作流引擎帮助您将重复性任务自动化，提高团队效率。</p>
+          
+          <h3>工作流组成</h3>
+          <p>每个工作流由以下元素组成：</p>
+          <ul>
+            <li><strong>触发器</strong> — 定义工作流启动条件（定时、事件、Webhook 等）</li>
+            <li><strong>条件</strong> — 分支逻辑判断，支持 AND/OR 组合</li>
+            <li><strong>动作</strong> — 具体执行的操作（发送通知、更新数据、调用 API 等）</li>
+          </ul>
+          
+          <h3>示例：新用户欢迎流程</h3>
+          <div class="code-block">
+<span style="color:#94a3b8;">触发器：</span>用户注册成功事件
+  <span style="color:#94a3b8;">↓</span>
+<span style="color:#94a3b8;">条件：</span>用户邮箱域名是否为 @enterprise.com
+  <span style="color:#94a3b8;">↓ (是)              ↓ (否)</span>
+<span style="color:#94a3b8;">动作：</span>分配企业客户标签  <span style="color:#94a3b8;">动作：</span>发送标准欢迎邮件
+  <span style="color:#94a3b8;">↓</span>
+<span style="color:#94a3b8;">动作：</span>通知销售团队跟进
+          </div>
+          
+          <h3>预置模板</h3>
+          <p>CloudFlow 提供 100+ 预置工作流模板，涵盖 CRM、营销自动化、工单管理等场景，一键启用即可使用。</p>
+        </section>
+
+        <!-- Collaboration -->
+        <section id="collaboration">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">团队协作</h2>
+          <p>团队协作中心集成了即时通讯、文档协作和项目管理功能，帮助团队高效沟通。</p>
+          
+          <h3>频道管理</h3>
+          <p>支持创建公开频道和私密频道。公开频道对团队所有成员可见，私密频道仅限受邀成员访问。建议按项目或部门创建独立频道。</p>
+          
+          <h3>文档协作</h3>
+          <p>内置在线文档编辑器，支持多人实时协同编辑、评论、版本历史。文档支持 Markdown 语法，可嵌入数据看板图表和工作流状态。</p>
+          
+          <h3>文件共享</h3>
+          <p>支持拖拽上传文件，单个文件最大 2 GB（专业版及以上）。文件自动存入团队知识库，支持全文搜索和标签分类。</p>
+        </section>
+
+        <!-- API Auth -->
+        <section id="api-auth">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">API 认证</h2>
+          <p>CloudFlow API 使用 API Key 进行身份认证。所有 API 请求必须通过 HTTPS 发送。</p>
+          
+          <h3>获取 API Key</h3>
+          <p>进入「设置」→「开发者」→「API Keys」，点击「创建密钥」。请妥善保管密钥，创建后仅显示一次。</p>
+          
+          <h3>请求认证</h3>
+          <p>在请求头中携带 API Key：</p>
+          <div class="code-block">
+<span style="color:#7dd3fc;">Authorization:</span> Bearer cf_sk_live_xxxxxxxxxxxxxxxxxxxx
+          </div>
+          
+          <h3>权限范围</h3>
+          <p>API Key 支持细粒度权限控制。创建时可选择授予的权限范围（读/写/管理），以及允许访问的资源（看板、工作流、用户等）。</p>
+        </section>
+
+        <!-- API Endpoints -->
+        <section id="api-endpoints">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">API 接口列表</h2>
+          <p>CloudFlow RESTful API 基础地址：<span class="inline-code">https://api.cloudflow.io/v1</span></p>
+          
+          <h3>核心接口</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border border-gray-200 rounded-lg mb-4">
+              <thead>
+                <tr class="bg-gray-50">
+                  <th class="text-left px-4 py-3 font-semibold text-gray-700">方法</th>
+                  <th class="text-left px-4 py-3 font-semibold text-gray-700">路径</th>
+                  <th class="text-left px-4 py-3 font-semibold text-gray-700">说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5"><span class="inline-code text-xs">GET</span></td><td class="px-4 py-2.5"><span class="inline-code text-xs">/dashboards</span></td><td class="px-4 py-2.5 text-gray-600">获取看板列表</td></tr>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5"><span class="inline-code text-xs">POST</span></td><td class="px-4 py-2.5"><span class="inline-code text-xs">/dashboards</span></td><td class="px-4 py-2.5 text-gray-600">创建新看板</td></tr>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5"><span class="inline-code text-xs">GET</span></td><td class="px-4 py-2.5"><span class="inline-code text-xs">/workflows</span></td><td class="px-4 py-2.5 text-gray-600">获取工作流列表</td></tr>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5"><span class="inline-code text-xs">POST</span></td><td class="px-4 py-2.5"><span class="inline-code text-xs">/workflows/:id/trigger</span></td><td class="px-4 py-2.5 text-gray-600">手动触发工作流</td></tr>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5"><span class="inline-code text-xs">GET</span></td><td class="px-4 py-2.5"><span class="inline-code text-xs">/users</span></td><td class="px-4 py-2.5 text-gray-600">获取团队成员列表</td></tr>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5"><span class="inline-code text-xs">POST</span></td><td class="px-4 py-2.5"><span class="inline-code text-xs">/users/invite</span></td><td class="px-4 py-2.5 text-gray-600">邀请新成员</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>完整的 API 文档请访问 <a href="#" class="text-primary-600 hover:underline">开发者门户</a>。</p>
+        </section>
+
+        <!-- API Errors -->
+        <section id="api-errors">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">API 错误码</h2>
+          <p>CloudFlow API 使用标准 HTTP 状态码。出错时返回 JSON 格式的错误信息。</p>
+          
+          <h3>常见错误码</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border border-gray-200 rounded-lg mb-4">
+              <thead>
+                <tr class="bg-gray-50">
+                  <th class="text-left px-4 py-3 font-semibold text-gray-700">状态码</th>
+                  <th class="text-left px-4 py-3 font-semibold text-gray-700">说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5 font-mono text-red-500">400</td><td class="px-4 py-2.5 text-gray-600">请求参数错误</td></tr>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5 font-mono text-red-500">401</td><td class="px-4 py-2.5 text-gray-600">未认证或 API Key 无效</td></tr>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5 font-mono text-red-500">403</td><td class="px-4 py-2.5 text-gray-600">权限不足</td></tr>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5 font-mono text-red-500">404</td><td class="px-4 py-2.5 text-gray-600">资源不存在</td></tr>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5 font-mono text-red-500">429</td><td class="px-4 py-2.5 text-gray-600">请求频率超限</td></tr>
+                <tr class="border-t border-gray-100"><td class="px-4 py-2.5 font-mono text-red-500">500</td><td class="px-4 py-2.5 text-gray-600">服务器内部错误</td></tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <h3>错误响应格式</h3>
+          <div class="code-block">
+{
+  <span style="color:#7dd3fc;">"error"</span>: {
+    <span style="color:#7dd3fc;">"code"</span>: <span style="color:#a5d6a7;">"invalid_parameter"</span>,
+    <span style="color:#7dd3fc;">"message"</span>: <span style="color:#a5d6a7;">"参数 'name' 不能为空"</span>,
+    <span style="color:#7dd3fc;">"details"</span>: {
+      <span style="color:#7dd3fc;">"field"</span>: <span style="color:#a5d6a7;">"name"</span>,
+      <span style="color:#7dd3fc;">"reason"</span>: <span style="color:#a5d6a7;">"required"</span>
+    }
+  }
+}
+          </div>
+        </section>
+
+        <!-- Account Settings -->
+        <section id="account-settings">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">账号设置</h2>
+          <p>在「设置」→「账号」页面，您可以管理个人信息和安全设置。</p>
+          
+          <h3>个人资料</h3>
+          <p>支持修改头像、昵称、职位、联系方式等信息。头像建议使用 400×400 像素的方形图片。</p>
+          
+          <h3>通知偏好</h3>
+          <p>自定义通知渠道和频率：</p>
+          <ul>
+            <li><strong>产品内通知</strong> — 平台右上角通知中心</li>
+            <li><strong>邮件通知</strong> — 日报、周报、告警通知</li>
+            <li><strong>企业微信/钉钉/飞书</strong> — 即时消息推送</li>
+          </ul>
+        </section>
+
+        <!-- Billing -->
+        <section id="billing">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">计费与发票</h2>
+          <p>在「设置」→「计费」页面，您可以查看当前套餐、用量统计和账单历史。</p>
+          
+          <h3>套餐变更</h3>
+          <p>升级套餐即时生效，费用按剩余天数比例计算。降级在当前计费周期结束后生效，期间可继续使用当前套餐的全部功能。</p>
+          
+          <h3>发票管理</h3>
+          <p>支持开具增值税普通发票和专用发票。在「计费」→「发票」页面填写开票信息，电子发票将在 3 个工作日内发送至您的邮箱。</p>
+          
+          <div class="callout">
+            <p><strong>注意：</strong>年付方案支持对公转账。如需对公转账，请联系销售团队获取对公账户信息。</p>
+          </div>
+        </section>
+
+        <!-- Security -->
+        <section id="security">
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-900">安全设置</h2>
+          <p>CloudFlow 提供多层次安全防护，确保您的数据安全。</p>
+          
+          <h3>双因素认证 (2FA)</h3>
+          <p>建议所有管理员账号启用双因素认证。支持 TOTP 验证器应用（如 Google Authenticator、Authy）和短信验证码。</p>
+          
+          <h3>登录记录</h3>
+          <p>在「设置」→「安全」→「登录记录」页面，可查看最近 30 天的登录历史，包括登录时间、IP 地址、设备信息。如发现异常登录，可立即强制下线。</p>
+          
+          <h3>IP 白名单</h3>
+          <p>企业版支持 IP 白名单功能，限制仅允许指定 IP 地址段访问，进一步增强安全性。</p>
+        </section>
+
+        <!-- Bottom feedback -->
+        <div class="mt-16 pt-8 border-t border-gray-200">
+          <p class="text-sm text-gray-400">没找到您需要的内容？<a href="#" class="text-primary-600 hover:underline">联系我们</a> 或提交 <a href="#" class="text-primary-600 hover:underline">文档反馈</a>。</p>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<footer class="bg-gray-900 text-gray-400 py-16 mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div class="lg:col-span-2">
+        <a href="index.html" class="flex items-center gap-2 text-white text-xl font-bold mb-4">
+          <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2563eb"/><path d="M10 22V12l6 5-6 5z" fill="white"/><path d="M16 22l6-10-6 10z" fill="rgba(255,255,255,0.6)"/></svg>
+          CloudFlow
+        </a>
+        <p class="text-sm leading-relaxed max-w-xs">企业级智能运营平台，帮助团队高效协作、数据驱动决策，实现业务持续增长。</p>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">产品</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="features.html" class="hover:text-white transition-colors">功能</a></li>
+          <li><a href="pricing.html" class="hover:text-white transition-colors">定价</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">集成</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">更新日志</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">资源</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="docs.html" class="hover:text-white transition-colors">文档</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">API 参考</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">博客</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">社区</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm">公司</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">关于我们</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">招聘</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">隐私政策</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">服务条款</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-12 pt-8 border-t border-gray-800 text-sm text-center">
+      &copy; 2026 CloudFlow. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile menu
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const iconOpen = document.getElementById('menuIconOpen');
+const iconClose = document.getElementById('menuIconClose');
+let menuOpen = false;
+menuBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  mobileMenu.classList.toggle('open', menuOpen);
+  iconOpen.classList.toggle('hidden', menuOpen);
+  iconClose.classList.toggle('hidden', !menuOpen);
+});
+
+// Mobile sidebar toggle
+const mobileSidebarBtn = document.getElementById('mobileSidebarBtn');
+const mobileSidebar = document.getElementById('mobileSidebar');
+let sidebarOpen = false;
+mobileSidebarBtn.addEventListener('click', () => {
+  sidebarOpen = !sidebarOpen;
+  mobileSidebar.classList.toggle('open', sidebarOpen);
+});
+
+// Close mobile sidebar when link clicked
+mobileSidebar.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    sidebarOpen = false;
+    mobileSidebar.classList.remove('open');
+  });
+});
+
+// Active sidebar link on scroll
+const sidebarLinks = document.querySelectorAll('.sidebar-link');
+const sections = document.querySelectorAll('section[id]');
+
+function updateActiveLink() {
+  let currentId = '';
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 150) {
+      currentId = section.id;
+    }
+  });
+  sidebarLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+  });
+}
+
+window.addEventListener('scroll', updateActiveLink, { passive: true });
+updateActiveLink();
+</script>
+</body>
+</html>
