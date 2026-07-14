@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;250;300;350;400;500&family=JetBrains+Mono:wght@300;400&display=swap');
+
+:root {
+  --havok-carbon: #0D0D0E;
+  --havok-graphite: #1A1A1D;
+  --havok-slate: #242428;
+  --havok-silver: #9A9DA5;
+  --havok-platinum: #C4C7CE;
+  --havok-frost: #6B8A8E;
+  --havok-divider: rgba(154, 157, 165, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--havok-carbon);
+  color: #D8DAE0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Track texture background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(154, 157, 165, 0.012) 2px,
+      rgba(154, 157, 165, 0.012) 4px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Global flow line animation layer */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(107, 138, 142, 0.03) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: trackFlow 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes trackFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Glass panel base */
+@layer components {
+  .glass-panel {
+    @apply relative overflow-hidden;
+    background: rgba(26, 26, 29, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(154, 157, 165, 0.08);
+    border-radius: 6px;
+  }
+
+  .glass-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(154, 157, 165, 0.12) 0%,
+      transparent 40%,
+      transparent 60%,
+      rgba(154, 157, 165, 0.06) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Scan line border effect */
+  .scan-border {
+    @apply relative overflow-hidden;
+  }
+
+  .scan-border::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid transparent;
+    animation: borderScan 3s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes borderScan {
+    0% { border-color: rgba(154, 157, 165, 0.06); }
+    50% { border-color: rgba(154, 157, 165, 0.18); }
+    100% { border-color: rgba(154, 157, 165, 0.06); }
+  }
+
+  /* Metal divider */
+  .metal-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(154, 157, 165, 0.15) 20%,
+      rgba(154, 157, 165, 0.15) 80%,
+      transparent 100%
+    );
+  }
+
+  .metal-divider-vertical {
+    width: 1px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(154, 157, 165, 0.15) 20%,
+      rgba(154, 157, 165, 0.15) 80%,
+      transparent 100%
+    );
+  }
+
+  /* Number animation */
+  .number-roll {
+    animation: numberRoll 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes numberRoll {
+    0% { opacity: 0; transform: translateY(16px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(154, 157, 165, 0.15);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(154, 157, 165, 0.25);
+}
+
+/* Selection */
+::selection {
+  background: rgba(107, 138, 142, 0.3);
+  color: #D8DAE0;
+}
+
+/* Focus ring */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(107, 138, 142, 0.4), 0 0 0 3px rgba(107, 138, 142, 0.1);
+}
