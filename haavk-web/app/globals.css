@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --background: #0D0D0D;
+  --foreground: #A8B4C0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Rajdhani', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 隐藏滚动条但保留滚动功能 */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0D0D0D;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A2A35;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7EB8DA;
+}
+
+/* 全息扫描线效果 */
+.holo-border {
+  position: relative;
+  overflow: hidden;
+}
+.holo-border::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(126, 184, 218, 0.4), transparent);
+  animation: scanLine 3s linear infinite;
+}
+
+/* 金属面板纹理 */
+.metal-panel {
+  background: linear-gradient(180deg, rgba(168, 180, 192, 0.06) 0%, rgba(168, 180, 192, 0.02) 50%, rgba(168, 180, 192, 0.04) 100%);
+  border: 1px solid rgba(168, 180, 192, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+/* 全息玻璃效果 */
+.holo-glass {
+  background: rgba(20, 20, 28, 0.7);
+  border: 1px solid rgba(168, 180, 192, 0.15);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(168, 180, 192, 0.08);
+}
+
+/* 数据流轨道纹理 */
+.data-track {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(168, 180, 192, 0.02) 2px,
+      rgba(168, 180, 192, 0.02) 3px
+    );
+}
+
+/* 金属分割线 */
+.metal-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(168, 180, 192, 0.2), transparent);
+}
+
+/* 冰蓝文字发光 */
+.text-glow {
+  text-shadow: 0 0 10px rgba(126, 184, 218, 0.3);
+}
+
+/* 全息输入框 */
+.holo-input {
+  background: rgba(20, 20, 28, 0.6);
+  border: 1px solid rgba(168, 180, 192, 0.15);
+  color: #A8B4C0;
+  transition: all 0.3s ease;
+}
+.holo-input:focus {
+  outline: none;
+  border-color: rgba(126, 184, 218, 0.5);
+  box-shadow: 0 0 12px rgba(126, 184, 218, 0.1), inset 0 0 8px rgba(126, 184, 218, 0.05);
+}
+
+/* 磨砂玻璃导航 */
+.frosted-nav {
+  background: rgba(13, 13, 13, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(168, 180, 192, 0.08);
+}
+
+/* 星际纪元时间字体 */
+.time-font {
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 0.15em;
+}
+
+/* CG窗口容器 */
+.cg-container {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(168, 180, 192, 0.12);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), inset 0 0 60px rgba(0, 0, 0, 0.3);
+}
+.cg-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(13, 13, 13, 0.3) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 铆钉装饰 */
+.rivet-corner {
+  position: relative;
+}
+.rivet-corner::before,
+.rivet-corner::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(168, 180, 192, 0.3);
+  border-radius: 50%;
+}
+.rivet-corner::before { top: -3px; left: -3px; }
+.rivet-corner::after { top: -3px; right: -3px; }
+
+/* 页面过渡 */
+.page-transition {
+  animation: pageFadeIn 0.6s ease-out forwards;
+}
+@keyframes pageFadeIn {
+  from { opacity: 0; filter: brightness(0.5); }
+  to { opacity: 1; filter: brightness(1); }
+}
+
+/* 数值闪烁 */
+@keyframes valueFlicker {
+  0%, 100% { opacity: 1; }
+  95% { opacity: 0.95; }
+  96% { opacity: 0.7; }
+  97% { opacity: 1; }
+  98% { opacity: 0.85; }
+}
+
+.value-flicker {
+  animation: valueFlicker 4s infinite;
+}
+
+/* 机密文字效果 */
+.classified-text {
+  filter: blur(4px);
+  transition: filter 0.5s ease;
+  cursor: pointer;
+}
+.classified-text:hover {
+  filter: blur(0);
+}
+
+/* 全息噪点叠加 */
+.holo-noise {
+  position: relative;
+}
+.holo-noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 10;
+}
