@@ -1,0 +1,40 @@
+<!--
+  modal.wxml - 通用弹窗组件
+  功能：新手引导弹窗、导出成功弹窗、权限申请提示弹窗
+  支持：标题、内容插槽、确认/取消按钮、自定义按钮文字
+-->
+
+<view class="modal-overlay {{show ? 'show' : ''}}" catchtouchmove="noop">
+  <view class="modal-container glass-panel {{show ? 'show' : ''}}">
+
+    <!-- 标题栏 -->
+    <view class="modal-header" wx:if="{{title}}">
+      <text class="modal-title">{{title}}</text>
+    </view>
+
+    <!-- 内容区（插槽） -->
+    <view class="modal-body">
+      <slot name="content"></slot>
+    </view>
+
+    <!-- 按钮区 -->
+    <view class="modal-footer">
+      <!-- 取消按钮 -->
+      <view
+        wx:if="{{showCancel}}"
+        class="modal-btn btn-cancel"
+        bindtap="onCancel"
+      >
+        <text>{{cancelText}}</text>
+      </view>
+
+      <!-- 确认按钮 -->
+      <view
+        class="modal-btn btn-confirm {{showCancel ? '' : 'btn-full'}}"
+        bindtap="onConfirm"
+      >
+        <text>{{confirmText}}</text>
+      </view>
+    </view>
+  </view>
+</view>

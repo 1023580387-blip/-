@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "modal-dialog": "/components/modal/modal"
+  },
+  "navigationBarTitleText": "图片转3D",
+  "navigationBarBackgroundColor": "#0a0a1a",
+  "navigationBarTextStyle": "white",
+  "disableScroll": true
+}

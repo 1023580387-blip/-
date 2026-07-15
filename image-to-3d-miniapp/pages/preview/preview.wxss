@@ -1,0 +1,256 @@
+/**
+ * preview.wxss - 3D预览画布页面样式
+ * 全屏WebGL画布 + 半透明控制栏
+ */
+
+/* ==================== 页面容器 ==================== */
+.preview-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #0a0a1a;
+}
+
+/* ==================== WebGL 3D 画布 ==================== */
+.webgl-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* ==================== 顶部控制栏 ==================== */
+.top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 24rpx;
+  padding-top: calc(88rpx + env(safe-area-inset-top));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none; /* 让触摸事件穿透到canvas */
+}
+
+.top-bar > * {
+  pointer-events: auto; /* 按钮可点击 */
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 14rpx 24rpx;
+  border-radius: 40rpx;
+}
+
+.back-icon {
+  font-size: 28rpx;
+  color: var(--color-primary);
+}
+
+.back-text {
+  font-size: 26rpx;
+  color: var(--color-text);
+}
+
+.model-info {
+  padding: 14rpx 24rpx;
+  border-radius: 40rpx;
+}
+
+.info-text {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+}
+
+/* ==================== 底部控制栏 ==================== */
+.bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.control-panel {
+  margin: 0 16rpx 16rpx;
+  padding: 24rpx 28rpx;
+  border-radius: var(--radius-lg);
+}
+
+/* 控制行 */
+.control-row {
+  margin-bottom: 20rpx;
+}
+
+.control-row:last-child {
+  margin-bottom: 0;
+}
+
+/* 滑块行 */
+.control-label {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  margin-bottom: 10rpx;
+  display: block;
+}
+
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.slider-min,
+.slider-max {
+  font-size: 20rpx;
+  color: var(--color-text-secondary);
+  width: 40rpx;
+  text-align: center;
+}
+
+.bump-slider {
+  flex: 1;
+}
+
+.slider-value {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--color-primary);
+  width: 50rpx;
+  text-align: center;
+}
+
+/* 按钮行 */
+.control-buttons {
+  display: flex;
+  gap: 16rpx;
+}
+
+.ctrl-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 8rpx;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.ctrl-btn:active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+.ctrl-btn.active {
+  background: rgba(77, 166, 255, 0.2);
+  border-color: var(--color-primary);
+}
+
+.ctrl-btn-icon {
+  font-size: 32rpx;
+  margin-bottom: 4rpx;
+}
+
+.ctrl-btn-text {
+  font-size: 20rpx;
+  color: var(--color-text-secondary);
+}
+
+/* 底部安全距离 */
+.safe-bottom {
+  height: env(safe-area-inset-bottom);
+}
+
+/* ==================== 加载指示器 ==================== */
+.loading-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+.loading-badge {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx 32rpx;
+  border-radius: 40rpx;
+}
+
+.loading-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: var(--color-primary);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50%      { opacity: 1; transform: scale(1); }
+}
+
+.loading-badge-text {
+  font-size: 24rpx;
+  color: var(--color-text);
+}
+
+/* ==================== 弹窗内容 ==================== */
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.modal-success-icon {
+  font-size: 64rpx;
+  margin-bottom: 20rpx;
+}
+
+.modal-text {
+  font-size: 28rpx;
+  color: var(--color-text);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* 背景色选择器 */
+.bg-color-picker {
+  width: 100%;
+}
+
+.color-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  justify-content: center;
+  padding: 10rpx 0;
+}
+
+.color-item {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  border: 3rpx solid transparent;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.color-item:active {
+  transform: scale(0.9);
+}
+
+.color-item.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 16rpx rgba(77, 166, 255, 0.5);
+}

@@ -1,0 +1,128 @@
+<!--
+  index.wxml - 首页上传页面
+  功能：图片上传入口、使用说明、新手引导
+  设计：极简科技风，半透明玻璃面板，蓝色高亮按钮
+-->
+
+<view class="page-container">
+
+  <!-- ==================== 顶部标题区 ==================== -->
+  <view class="header-section">
+    <view class="logo-area">
+      <view class="logo-icon">
+        <text class="logo-text">3D</text>
+      </view>
+      <view class="title-text">图片转3D模型</view>
+      <view class="subtitle-text">AI 深度识别 · 一键生成立体模型</view>
+    </view>
+  </view>
+
+  <!-- ==================== 中间预览动画区 ==================== -->
+  <view class="preview-area">
+    <!-- 装饰性3D旋转动画（纯CSS模拟） -->
+    <view class="rotating-cube">
+      <view class="cube-face front"></view>
+      <view class="cube-face back"></view>
+      <view class="cube-face left"></view>
+      <view class="cube-face right"></view>
+      <view class="cube-face top"></view>
+      <view class="cube-face bottom"></view>
+    </view>
+    <!-- 科技感粒子背景 -->
+    <view class="particle p1"></view>
+    <view class="particle p2"></view>
+    <view class="particle p3"></view>
+    <view class="particle p4"></view>
+  </view>
+
+  <!-- ==================== 上传按钮区 ==================== -->
+  <view class="action-section">
+    <!-- 拍照按钮 -->
+    <button class="upload-btn btn-camera glass-panel glow-border" bindtap="onTakePhoto">
+      <view class="btn-icon">
+        <text class="iconfont">📷</text>
+      </view>
+      <view class="btn-label">实时拍照</view>
+      <view class="btn-desc">拍摄实物即时生成3D</view>
+    </button>
+
+    <!-- 相册选择按钮 -->
+    <button class="upload-btn btn-album glass-panel glow-border" bindtap="onChooseAlbum">
+      <view class="btn-icon">
+        <text class="iconfont">🖼</text>
+      </view>
+      <view class="btn-label">相册上传</view>
+      <view class="btn-desc">选择图片一键转3D</view>
+    </button>
+  </view>
+
+  <!-- ==================== 使用说明卡片 ==================== -->
+  <view class="guide-section">
+    <view class="guide-card glass-panel">
+      <view class="guide-header">
+        <text class="guide-title">使用说明</text>
+      </view>
+      <view class="guide-steps">
+        <view class="step-item">
+          <view class="step-num">1</view>
+          <text class="step-text">拍照或从相册选择图片</text>
+        </view>
+        <view class="step-item">
+          <view class="step-num">2</view>
+          <text class="step-text">AI 自动分析图片深度信息</text>
+        </view>
+        <view class="step-item">
+          <view class="step-num">3</view>
+          <text class="step-text">实时预览3D立体模型效果</text>
+        </view>
+        <view class="step-item">
+          <view class="step-num">4</view>
+          <text class="step-text">导出GLB模型或保存截图</text>
+        </view>
+      </view>
+      <view class="guide-tip">
+        <text class="tip-text">💡 提示：选择轮廓清晰、光影分明的图片效果最佳</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ==================== 底部信息 ==================== -->
+  <view class="footer-section">
+    <text class="footer-text">纯本地处理 · 无需网络 · 保护隐私</text>
+  </view>
+
+  <!-- ==================== 加载遮罩 ==================== -->
+  <view class="loading-overlay" wx:if="{{isLoading}}">
+    <view class="loading-card glass-panel">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">{{loadingText}}</text>
+      <text class="loading-subtext">正在分析图片深度信息...</text>
+    </view>
+  </view>
+
+  <!-- ==================== 新手引导弹窗 ==================== -->
+  <modal-dialog
+    wx:if="{{showGuide}}"
+    title="欢迎使用"
+    show="{{showGuide}}"
+    confirmText="开始使用"
+    showCancel="{{false}}"
+    bind:confirm="onCloseGuide"
+  >
+    <view slot="content" class="guide-modal-content">
+      <view class="guide-feature">
+        <text class="feature-icon">🎨</text>
+        <text class="feature-text">上传任意图片，AI自动识别深度</text>
+      </view>
+      <view class="guide-feature">
+        <text class="feature-icon">🔄</text>
+        <text class="feature-text">手指拖拽旋转、双指缩放3D模型</text>
+      </view>
+      <view class="guide-feature">
+        <text class="feature-icon">📦</text>
+        <text class="feature-text">一键导出GLB通用3D格式</text>
+      </view>
+    </view>
+  </modal-dialog>
+
+</view>

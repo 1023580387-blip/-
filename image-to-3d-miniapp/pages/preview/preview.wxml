@@ -1,0 +1,142 @@
+<!--
+  preview.wxml - 3D预览画布页面
+  功能：全屏WebGL 3D画布 + 底部控制栏（凹凸调节、渲染模式、导出、截图）
+  交互：单指拖拽旋转、双指缩放、单指平移
+-->
+
+<view class="preview-container">
+
+  <!-- ==================== WebGL 3D 画布 ==================== -->
+  <!-- 使用 type="webgl" 启用 WebGL 渲染上下文 -->
+  <canvas
+    type="webgl"
+    id="webglCanvas"
+    class="webgl-canvas"
+    bindtouchstart="onTouchStart"
+    bindtouchmove="onTouchMove"
+    bindtouchend="onTouchEnd"
+    disable-scroll="true"
+  ></canvas>
+
+  <!-- ==================== 顶部返回按钮 ==================== -->
+  <view class="top-bar">
+    <view class="back-btn glass-panel" bindtap="onBack">
+      <text class="back-icon">←</text>
+      <text class="back-text">返回</text>
+    </view>
+    <view class="model-info glass-panel">
+      <text class="info-text">3D预览</text>
+    </view>
+  </view>
+
+  <!-- ==================== 底部控制栏 ==================== -->
+  <view class="bottom-bar">
+    <!-- 控制栏主体 -->
+    <view class="control-panel glass-panel">
+      <!-- 凹凸强度调节 -->
+      <view class="control-row">
+        <text class="control-label">凹凸强度</text>
+        <view class="slider-wrapper">
+          <text class="slider-min">0.5</text>
+          <slider
+            class="bump-slider"
+            min="0.5"
+            max="2.0"
+            step="0.1"
+            value="{{bumpStrength}}"
+            activeColor="#4da6ff"
+            backgroundColor="rgba(77,166,255,0.2)"
+            block-size="20"
+            block-color="#ffffff"
+            bindchange="onBumpChange"
+            show-value="{{false}}"
+          />
+          <text class="slider-max">2.0</text>
+        </view>
+        <text class="slider-value">{{bumpStrength}}</text>
+      </view>
+
+      <!-- 按钮操作区 -->
+      <view class="control-row control-buttons">
+        <!-- 渲染模式切换 -->
+        <view class="ctrl-btn glass-panel {{renderMode === 'wireframe' ? 'active' : ''}}" bindtap="onToggleRenderMode">
+          <text class="ctrl-btn-icon">{{renderMode === 'solid' ? '◻' : '▦'}}</text>
+          <text class="ctrl-btn-text">{{renderMode === 'solid' ? '实体' : '线框'}}</text>
+        </view>
+
+        <!-- 背景色切换 -->
+        <view class="ctrl-btn glass-panel" bindtap="onChangeBgColor">
+          <text class="ctrl-btn-icon">🎨</text>
+          <text class="ctrl-btn-text">背景</text>
+        </view>
+
+        <!-- 导出GLB模型 -->
+        <view class="ctrl-btn glass-panel" bindtap="onExportGLB">
+          <text class="ctrl-btn-icon">📦</text>
+          <text class="ctrl-btn-text">导出</text>
+        </view>
+
+        <!-- 保存截图 -->
+        <view class="ctrl-btn glass-panel" bindtap="onSaveScreenshot">
+          <text class="ctrl-btn-icon">📸</text>
+          <text class="ctrl-btn-text">截图</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部安全距离 -->
+    <view class="safe-bottom"></view>
+  </view>
+
+  <!-- ==================== 加载提示 ==================== -->
+  <view class="loading-indicator" wx:if="{{isGenerating}}">
+    <view class="loading-badge glass-panel">
+      <view class="loading-dot"></view>
+      <text class="loading-badge-text">生成中...</text>
+    </view>
+  </view>
+
+  <!-- ==================== 导出成功弹窗 ==================== -->
+  <modal-dialog
+    wx:if="{{showExportModal}}"
+    title="导出成功"
+    show="{{showExportModal}}"
+    confirmText="好的"
+    showCancel="{{false}}"
+    bind:confirm="onCloseExportModal"
+  >
+    <view slot="content" class="modal-content">
+      <text class="modal-success-icon">✅</text>
+      <text class="modal-text">{{exportMessage}}</text>
+    </view>
+  </modal-dialog>
+
+  <!-- ==================== 背景色选择弹窗 ==================== -->
+  <modal-dialog
+    wx:if="{{showBgColorModal}}"
+    title="选择背景色"
+    show="{{showBgColorModal}}"
+    confirmText="确定"
+    showCancel="{{true}}"
+    bind:confirm="onConfirmBgColor"
+    bind:cancel="onCancelBgColor"
+  >
+    <view slot="content" class="modal-content bg-color-picker">
+      <view class="color-options">
+        <view class="color-item {{bgColor === '#1a1a2e' ? 'selected' : ''}}"
+              style="background: #1a1a2e" bindtap="onSelectBgColor" data-color="#1a1a2e"></view>
+        <view class="color-item {{bgColor === '#0a0a0a' ? 'selected' : ''}}"
+              style="background: #0a0a0a" bindtap="onSelectBgColor" data-color="#0a0a0a"></view>
+        <view class="color-item {{bgColor === '#1a2a3a' ? 'selected' : ''}}"
+              style="background: #1a2a3a" bindtap="onSelectBgColor" data-color="#1a2a3a"></view>
+        <view class="color-item {{bgColor === '#2a1a2e' ? 'selected' : ''}}"
+              style="background: #2a1a2e" bindtap="onSelectBgColor" data-color="#2a1a2e"></view>
+        <view class="color-item {{bgColor === '#1a2e1a' ? 'selected' : ''}}"
+              style="background: #1a2e1a" bindtap="onSelectBgColor" data-color="#1a2e1a"></view>
+        <view class="color-item {{bgColor === '#ffffff' ? 'selected' : ''}}"
+              style="background: #ffffff" bindtap="onSelectBgColor" data-color="#ffffff"></view>
+      </view>
+    </view>
+  </modal-dialog>
+
+</view>
