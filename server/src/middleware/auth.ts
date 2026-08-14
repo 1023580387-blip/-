@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'language-learning-secret-key-2024';
 
-export interface AuthRequest extends Request {
+export interface AuthRequest extends Request<any, any, any> {
   user?: {
     id: number;
     username: string;
